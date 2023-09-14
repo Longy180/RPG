@@ -2,24 +2,30 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200,200), "Rory smells");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    float windowHeight = 400;
+    float windowWidth = 400;
 
-    while (window.isOpen())
-    {
+    sf::RenderWindow window(sf::VideoMode(windowWidth,windowHeight), "RPG");
+
+
+    sf::Texture texture;
+    if(!texture.loadFromFile("images/enemy.png")){
+        return 0;
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+    while (window.isOpen()){
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed){
+        while(window.pollEvent(event)){
+            if (event.type == sf::Event::Closed) {
                 window.close();
             }
         }
-        window.clear();
-        window.draw(shape);
-        window.display();
-        
-    }
 
-    return 0;
+        window.clear();
+        window.draw(sprite);
+        window.display();
+    }
+    
 }
