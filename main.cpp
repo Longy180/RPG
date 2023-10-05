@@ -65,13 +65,13 @@ public:
                     win->close();
                 }
                 if(Keyboard::isKeyPressed(Keyboard::A)){
-                    player->move_left(6);
+                    player->move_left(6*2);
                 } else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    player->move_right(6);
+                    player->move_right(6*2);
                 } else if (Keyboard::isKeyPressed(Keyboard::W)){
-                    player->move_up(6);
+                    player->move_up(6*2);
                 } else if (Keyboard::isKeyPressed(Keyboard::S)){
-                    player->move_down(6);
+                    player->move_down(6*2);
                 }
                 if (Keyboard::isKeyPressed(Keyboard::Space)){
                     player->fire();
@@ -112,7 +112,7 @@ public:
 
 int main()
 {
-    Game game(500, "OOP Game", 100, 10);
+    Game game(1000, "Dog Game", 100, 10);
     game.run();
     
 }
