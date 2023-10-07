@@ -1,19 +1,32 @@
 #include <SFML/Graphics.hpp>
-#include "spell.h"
+#include <iostream>
 
-class Player {
+class Map {
     private:
-        sf::CircleShape* body;
+        sf::Sprite* body;
         int _depth;
     public:
-        Player(int r, int x, int y, int num_O_Spells){
-            body = new sf::CircleShape();
-            body->setRadius(r);
+            
+        Map(int r, int x, int y){
+            body = new sf::Sprite();
             body->setPosition(x,y);
-            body->setFillColor(sf::Color::Green);
-            body->setOrigin(r/2,r/2);
-            _depth = r;
+            _depth = r; 
+
+             //Set sprite
+            sf::Image image;
+        if (!(image.loadFromFile("images/map.jpeg")))
+                std::cout << "Cannot load image";   //Load Image
+        
+        sf::Texture texture;
+        texture.loadFromImage(image);
+
+        body->setTexture(texture, true);    
         }
+
+
+
+
+
         void draw(sf::RenderWindow* win){
             win->draw(*body);
         }
@@ -30,26 +43,19 @@ class Player {
 
         
         void move_right(int speed){
-            body->move(speed,0);
-        }
-        void move_left(int speed){
             body->move(-speed,0);
         }
-        void move_up(int speed){
-            body->move(0,-speed);
+        void move_left(int speed){
+            body->move(speed,0);
         }
-        void move_down(int speed){
+        void move_up(int speed){
             body->move(0,speed);
         }
-
-        bool isHit(int t_x,int t_y, int t_depth){
-            bool hit = false;
-
-            return hit;
+        void move_down(int speed){
+            body->move(0,-speed);
         }
 
-
-        ~Player(){
+        ~Map(){
             delete this->body;
         }
 };

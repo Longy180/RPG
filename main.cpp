@@ -3,6 +3,7 @@
 #include <string>
 #include "player.h"
 #include "enemy.h"
+#include "map.h"
 
 #include <iostream>
 
@@ -19,11 +20,13 @@ private:
     int _score;
     sf::Text info;
     sf::Font font;
+    Map* map;
 
 public:
     Game(int size, std::string title, int num_spells, int army_size){
         win = new sf::RenderWindow(sf::VideoMode(size,size),title);
-        player = new Player(10, 50, 50, num_spells);
+        map = new Map(10,50,50);
+        player = new Player(10, 250, 250, num_spells);
         enemy = new Enemy[army_size];
         this->_army_size = army_size;
         this->_num_spells = num_spells;
@@ -65,17 +68,15 @@ public:
                     win->close();
                 }
                 if(Keyboard::isKeyPressed(Keyboard::A)){
-                    player->move_left(6*2);
+                    map->move_left(6);
                 } else if (Keyboard::isKeyPressed(Keyboard::D)){
-                    player->move_right(6*2);
+                    map->move_right(6);
                 } else if (Keyboard::isKeyPressed(Keyboard::W)){
-                    player->move_up(6*2);
+                    map->move_up(6);
                 } else if (Keyboard::isKeyPressed(Keyboard::S)){
-                    player->move_down(6*2);
+                    map->move_down(6);
                 }
-                if (Keyboard::isKeyPressed(Keyboard::Space)){
-                    player->fire();
-                }
+
                 if (Keyboard::isKeyPressed(Keyboard::E)){
                     for (int i = 0; i < _army_size; i++){
                         enemy[i].spawn(win->getSize().x-10, win->getSize().y);
@@ -88,6 +89,7 @@ public:
             if(_score < 0 ){
                 break;
             }
+            map->draw(win);
             player->draw(win);
             for (int i = 0; i < _army_size; i++){
                 enemy[i].draw(win);
@@ -112,7 +114,7 @@ public:
 
 int main()
 {
-    Game game(1000, "Dog Game", 100, 10);
+    Game game(500, "OOP Game", 100, 10);
     game.run();
     
 }
