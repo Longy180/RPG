@@ -4,11 +4,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "spell.h"
+#include <SFML/Graphics.hpp>
 
 class Player {
  protected:
   sf::Texture* playerBody;
   int _depth;
+  sf::Sprite playerSprite;
 
  public:
   Player();
@@ -16,9 +18,12 @@ class Player {
 
   int get_x();
   int get_y();
-  sf::Texture* get_playerBody();
+  sf::Sprite get_playerSprite();
   sf::Vector2f get_PlayerPosition();
-  void movePlayer(char key);
+  void move_down(float distance);
+  void move_up(float distance);
+  void move_left(float distance);
+  void move_right(float distance);
   bool isHit(int t_x, int t_y, int t_depth);
 
   ~Player();

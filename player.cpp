@@ -3,66 +3,50 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Player::Player() {
-  if (!playerBody.loadFromFile("path_to_your_image.png")) {
+Player::Player() : playerBody(new sf::Texture) {
+  if (!playerBody->loadFromFile("Sprites/halfling ranger/HalflingRangerIdleSide.gif")) {
     std::cout << "Error loading player model." << std::endl;
   }
 
-  sf::Sprite playerSprite;
-  playerSprite.setTexture(playerSprite);
-}
-void draw(sf::RenderWindow* win) { win->draw(*playerBody); }
-
-int get_x() { return body->getPosition().x; }
-
-int get_y() { return body->getPosition().y; }
-
-int get_depth() { return _depth; }
-
-sf::Texture* get_playerBody(){
-  return (Player::playerBody);
-}
-sf::Vector2f get_PlayerPosition(){
-  Player::playerBody.getposition();
+  playerSprite.setTexture(*playerBody);
 }
 
-//gets keypress from main and moves the player model accordingly
+void Player::draw(sf::RenderWindow* win) { win->draw(playerSprite); }
 
-void Player::movePlayer(char key){
-  // up movement
-  if (key == 'w'){
-  sf::Vector2f pose = playerBody.getPosition();
-  pose.y += 6;  // Move to the right by 6 units
-  playerBody.setPosition(pose);
-  }
-  // left movement
-  else if (key == 'a'){
-  sf::Vector2f pose = playerBody.getPosition();
-  pose.x -= 6;  // Move left by 6 units
-  playerBody.setPosition(pose);
-  }
-  // down movement
-  else if(key == 's'){
-  sf::Vector2f pose = playerBody.getPosition();
-  pose.y -= 6;  // Move down by 6 units
-  playerBody.setPosition(pose);
-  }
-  // right movement
-  else if (key == 'd'){
-  sf::Vector2f pose = playerBody.getPosition();
-  pose.x += 6;  // Move to the right by 6 units
-  playerBody.setPosition(pose);
-  }
+int Player::get_x() { return playerSprite.getPosition().x; }
+int Player::get_y() { return playerSprite.getPosition().y; }
+sf::Sprite Player::get_playerSprite(){ return playerSprite; }
+
+
+void Player::move_right(float distance) {
+  sf::Vector2f position = playerSprite.getPosition();
+  position.x += distance;  // Move to the right by 'distance' units
+  playerSprite.setPosition(position);
+}
+
+void Player::move_left(float distance) {
+  sf::Vector2f position = playerSprite.getPosition();
+  position.x -= distance;
+  playerSprite.setPosition(position);
 }
 
 
-bool isHit(int t_x, int t_y, int t_depth) {
+void Player::move_up(float distance) {
+  sf::Vector2f position = playerSprite.getPosition();
+  position.y -= distance;  // Move to the right by 'distance' units
+  playerSprite.setPosition(position);
+}
+
+void Player::move_down(float distance) {
+  sf::Vector2f position = playerSprite.getPosition();
+  position.y += distance;  // Move to the right by 'distance' units
+  playerSprite.setPosition(position);
+}
+
+bool Player::isHit(int t_x, int t_y, int t_depth) {
   bool hit = false;
 
   return hit;
 }
 
-~Player() { delete this->body; }
-};
-
-#endif
+Player::~Player() { delete playerBody; }
