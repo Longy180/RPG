@@ -16,8 +16,10 @@ class Map {
             _depth = r; 
 
              //Set sprite
+
             sf::Texture texture;
         if (!(texture.loadFromFile("images/map.jpeg")))
+
                 std::cout << "Cannot load image";   //Load Image
 
         body->setTexture(texture, true);    
