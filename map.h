@@ -1,3 +1,6 @@
+#ifndef MAP_H
+#define MAP_H
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -7,18 +10,15 @@ class Map {
         int _depth;
     public:
             
-        Map(int r, int x, int y){
+        Map(int r){
             body = new sf::Sprite();
-            body->setPosition(x,y);
+            body->setPosition(100, 100);
             _depth = r; 
 
              //Set sprite
-            sf::Image image;
-        if (!(image.loadFromFile("images/map.jpeg")))
+            sf::Texture texture;
+        if (!(texture.loadFromFile("images/map.jpeg")))
                 std::cout << "Cannot load image";   //Load Image
-        
-        sf::Texture texture;
-        texture.loadFromImage(image);
 
         body->setTexture(texture, true);    
         }
@@ -60,3 +60,4 @@ class Map {
         }
 };
 
+#endif

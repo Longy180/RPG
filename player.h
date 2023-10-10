@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <SFML/Graphics.hpp>
 #include "spell.h"
 
@@ -54,3 +57,4 @@ class Player {
         }
 };
 
+#endif
