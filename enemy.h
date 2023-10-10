@@ -1,3 +1,6 @@
+#ifndef ENEMY_H
+#define ENEMY_H
+
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <time.h>
@@ -62,3 +65,5 @@ public:
         delete this->body;
     }
 };
+
+#endif
