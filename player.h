@@ -16,12 +16,9 @@ class Player {
 
   int get_x();
   int get_y();
-
-  void move_right(sf::Texture& player, sf::Sprite& playerBody, float distance);
-  void move_left(sf::Texture& player, sf::Sprite& playerBody, float distance);
-  void move_up(sf::Texture& player, sf::Sprite& playerBody, float distance);
-  void move_down(sf::Texture& player, sf::Sprite& playerBody, float distance);
-
+  sf::Texture* get_playerBody();
+  sf::Vector2f get_PlayerPosition();
+  void movePlayer(char key);
   bool isHit(int t_x, int t_y, int t_depth);
 
   ~Player();
