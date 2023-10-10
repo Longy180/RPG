@@ -18,16 +18,12 @@ class Map {
              //Set sprite
 
             sf::Texture texture;
-        if (!(texture.loadFromFile("images/map.jpeg")))
+        if (!(texture.loadFromFile("images/map.png")))
 
                 std::cout << "Cannot load image";   //Load Image
 
         body->setTexture(texture, true);    
         }
-
-
-
-
 
         void draw(sf::RenderWindow* win){
             win->draw(*body);
