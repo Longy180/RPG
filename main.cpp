@@ -1,27 +1,73 @@
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <iostream>
 #include <string>
-#include "player.h"
+
 #include "enemy.h"
 #include "map.h"
+#include "player.h"
 
-#include <iostream>
+int main() {
+  sf::RenderWindow window(sf::VideoMode(1300, 732), "Game_Name");
 
+  sf::Texture backgroundTexture;
+  backgroundTexture.loadFromFile("images/map.jpeg");
+  sf::Sprite background(backgroundTexture);
+  background.setPosition(0, 0);
 
+  while (window.isOpen()) {
+    sf::Event event;
+    Player player1;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        player1.move_left();
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        player.move_right(6);
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        map->move_up(6);
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        map->move_down(6);
+      }
 
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        for (int i = 0; i < _army_size; i++) {
+          enemy[i].spawn(win->getSize().x - 10, win->getSize().y);
+        }
+      }
+    }
 
-
-int main()
-{
-    // sf::RenderWindow window(sf::VideoMode(1300, 732), "Game_Name");
-
-
-    // sf::Texture backgroundTexture;
-    // backgroundTexture.loadFromFile("images/map.png");
-    // sf::Sprite background(backgroundTexture);
-    // background.setPosition(0, 0);
-    // window.draw(background);
-
+    window.clear();
+    window.draw(background);
     window.display();
-    
+  }
+
+  return 0;
+}
+
+while (win->isOpen()) {
+  sf::Event e;
+  while (win->pollEvent(e)) {
+    if (e.type == sf::Event::Closed) {
+      win->close();
+    }
+  }
+  win->clear();
+  check_score();
+  if (_score < 0) {
+    break;
+  }
+  map->draw(win);
+  player->draw(win);
+  for (int i = 0; i < _army_size; i++) {
+    enemy[i].draw(win);
+  }
+  std::string msg;
+  msg = "Score: " + std::to_string(_score) + " ";
+  info.setString(msg);
+  win->draw(info);
+  win->display();
 }
