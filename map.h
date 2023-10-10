@@ -14,7 +14,7 @@ class Map {
 
              //Set sprite
             sf::Image image;
-        if (!(image.loadFromFile("images/map.jpeg")))
+        if (!(image.loadFromFile("C:/Users/AHS Student/Desktop/map.png")))
                 std::cout << "Cannot load image";   //Load Image
         
         sf::Texture texture;
