@@ -4,19 +4,24 @@
 #include <iostream>
 
 Player::Player() : playerBody(new sf::Texture) {
-  if (!playerBody->loadFromFile("Sprites/halfling ranger/HalflingRangerIdleSide.gif")) {
+  if (!playerBody->loadFromFile(
+          "Sprites/halfling ranger/HalflingRangerIdleSide.gif")) {
     std::cout << "Error loading player model." << std::endl;
   }
 
   playerSprite.setTexture(*playerBody);
+  sf::Vector2f playerVelocity(0.f, 0.f);
+  float dampingFactor = 0.1f;
+  playerVelocity.x *= dampingFactor;
+  playerVelocity.y *= dampingFactor;
+  playerSprite.setPosition(200, 200);
 }
 
 void Player::draw(sf::RenderWindow* win) { win->draw(playerSprite); }
 
 int Player::get_x() { return playerSprite.getPosition().x; }
 int Player::get_y() { return playerSprite.getPosition().y; }
-sf::Sprite Player::get_playerSprite(){ return playerSprite; }
-
+sf::Sprite Player::get_playerSprite() { return playerSprite; }
 
 void Player::move_right(float distance) {
   sf::Vector2f position = playerSprite.getPosition();
@@ -29,7 +34,6 @@ void Player::move_left(float distance) {
   position.x -= distance;
   playerSprite.setPosition(position);
 }
-
 
 void Player::move_up(float distance) {
   sf::Vector2f position = playerSprite.getPosition();
