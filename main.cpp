@@ -36,19 +36,19 @@ int main() {
       elapsedTime = clock.getElapsedTime();
       if (elapsedTime.asSeconds() > 0.1) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-          player1.move_left(6);
+          player1.move_left(12);
           std::cout << "Left" << std::endl;
           clock.restart();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-          player1.move_right(6);
+          player1.move_right(12);
           std::cout << "Right" << std::endl;
           clock.restart();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-          player1.move_up(6);
+          player1.move_up(12);
           std::cout << "Up" << std::endl;
           clock.restart();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-          player1.move_down(6);
+          player1.move_down(12);
           std::cout << "Down" << std::endl;
           clock.restart();
         }
