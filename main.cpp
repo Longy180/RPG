@@ -13,7 +13,10 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(1300, 732), "They stole your dog.");
   sf::Clock clock;
   sf::Time elapsedTime;
+  sf::View view;
+  window.setView(view);
 
+//Set background
   sf::Texture backgroundTexture;
   backgroundTexture.loadFromFile("images/mapfile.png");
   sf::Sprite background(backgroundTexture);
@@ -21,6 +24,7 @@ int main() {
 
   Player player1;
 
+//Game loop
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -28,6 +32,7 @@ int main() {
         window.close();
       }
 
+//Player movement
       elapsedTime = clock.getElapsedTime();
       if (elapsedTime.asSeconds() > 0.25) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -50,6 +55,16 @@ int main() {
       }
     }
 
+// Update the view to follow the player
+  view.setCenter(player1.get_PlayerPosition());
+
+  // Set the view's size to control the area visible on the screen
+  view.setSize(sf::Vector2f(800, 450)); 
+
+  // Apply the view to the window
+  window.setView(view);
+
+//Clear and Draw window
     window.clear();
     window.draw(background);
     player1.draw(&window);
@@ -59,4 +74,3 @@ int main() {
 
   return 0;
 }
-// hey
