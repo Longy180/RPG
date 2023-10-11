@@ -11,6 +11,7 @@ class Player {
   sf::Texture* playerBody;
   int _depth;
   sf::Sprite playerSprite;
+  float dampingFactor;
 
  public:
   Player();
