@@ -12,6 +12,7 @@ Player::Player() : playerBody(new sf::Texture) {
 
   playerSprite.setTexture(*playerBody);
   playerSprite.setPosition(200, 200);
+  playerSprite.setScale(3,3);
 }
 
 //draws player sprite to game window

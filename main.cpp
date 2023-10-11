@@ -18,7 +18,7 @@ int main() {
 
 //Set background
   sf::Texture backgroundTexture;
-  backgroundTexture.loadFromFile("images/mapfile.png");
+  backgroundTexture.loadFromFile("images/GameMap.png");
   sf::Sprite background(backgroundTexture);
   background.setPosition(0, 0);
 
@@ -34,7 +34,7 @@ int main() {
 
 //Player movement
       elapsedTime = clock.getElapsedTime();
-      if (elapsedTime.asSeconds() > 0.25) {
+      if (elapsedTime.asSeconds() > 0.1) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
           player1.move_left(6);
           std::cout << "Left" << std::endl;
