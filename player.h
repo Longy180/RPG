@@ -1,31 +1,23 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
+#include <string>
 #include <SFML/Graphics.hpp>
-
-#include "spell.h"
-#include <SFML/Graphics.hpp>
-
-class Player {
+#include "character.h"
+class Player : public Character{
  protected:
-  sf::Texture* playerBody;
-  int _depth;
-  sf::Sprite playerSprite;
-
+  int currGold;
+  //Inventory, will need to be added to initialiser
  public:
-  Player();
-  void draw(sf::RenderWindow* win);
+  Player(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage, int currGold);
+  
 
-  int get_x();
-  int get_y();
-  sf::Sprite get_playerSprite();
-  sf::Vector2f get_PlayerPosition();
   void move_down(float distance);
   void move_up(float distance);
   void move_left(float distance);
   void move_right(float distance);
   bool isHit(int t_x, int t_y, int t_depth);
 
+  void draw(sf::RenderWindow* win) override;
   ~Player();
 };
 

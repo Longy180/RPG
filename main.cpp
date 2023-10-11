@@ -8,7 +8,8 @@
 // #include "enemy.h"
 #include "map.h"
 #include "player.h"
-
+#include "character.h"
+#include "entity.h"
 int main() {
   sf::RenderWindow window(sf::VideoMode(1300, 732), "They stole your dog.");
   sf::Clock clock;
@@ -22,7 +23,11 @@ int main() {
   sf::Sprite background(backgroundTexture);
   background.setPosition(0, 0);
 
-  Player player1;
+//Create Player
+  std::string spriteLocation = "Sprites/halfling ranger/HalflingRangerIdleSide.gif";
+  int startingX = 200, startingY =200;
+  int maxHealth = 100, currHealth = 100, damage = 10, currGold = 0;
+  Player player1(spriteLocation,startingX, startingY, maxHealth, currHealth, damage, currGold);
 
 //Game loop
   while (window.isOpen()) {
@@ -55,8 +60,8 @@ int main() {
       }
     }
 
-// Update the view to follow the player
-  view.setCenter(player1.get_PlayerPosition());
+  // Update the view to follow the player
+  view.setCenter(player1.get_EntityPosition());
 
   // Set the view's size to control the area visible on the screen
   view.setSize(sf::Vector2f(800, 450)); 
@@ -64,7 +69,7 @@ int main() {
   // Apply the view to the window
   window.setView(view);
 
-//Clear and Draw window
+  //Clear and Draw window
     window.clear();
     window.draw(background);
     player1.draw(&window);

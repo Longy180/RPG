@@ -1,8 +1,14 @@
-output: main.o enemy.o map.o player.o spell.o
-	g++ main.o enemy.o map.o player.o spell.o -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
+output: entity.o character.o player.o  enemy.o map.o  main.o 
+	g++  entity.o character.o player.o enemy.o map.o  main.o  -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
 
-main.o: main.cpp
-	g++ -c main.cpp 
+entity.o: entity.cpp
+	g++ -c entity.cpp
+
+character.o: character.cpp
+	g++ -c character.cpp
+
+player.o: player.cpp
+	g++ -c player.cpp
 
 enemy.o: enemy.cpp
 	g++ -c enemy.cpp
@@ -10,11 +16,8 @@ enemy.o: enemy.cpp
 map.o: map.cpp
 	g++ -c map.cpp
 
-player.o: player.cpp
-	g++ -c player.cpp
-
-spell.o: spell.cpp
-	g++ -c spell.cpp
+main.o: main.cpp
+	g++ -c main.cpp 
 
 clean:
 	rm *.o run

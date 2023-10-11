@@ -1,12 +1,13 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-#include "entity.h"
+
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <time.h>
 #include <cmath>
 
-class Enemy : public Entity{
+class Enemy
+{
 private:
     sf::RectangleShape* body;
     bool alive;
