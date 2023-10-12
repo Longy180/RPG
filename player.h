@@ -17,7 +17,7 @@ class Player : public Character{
   void move_right(float distance);
   bool isHit(int t_x, int t_y, int t_depth);
 
-  void draw(sf::RenderWindow* win) override;
+  void draw(sf::RenderWindow* win);
   ~Player();
 };
 

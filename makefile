@@ -1,5 +1,5 @@
 output: entity.o character.o player.o  enemy.o map.o  main.o 
-	g++  entity.o character.o player.o enemy.o map.o  main.o  -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
+	g++  entity.o character.o player.o enemy.o map.o  main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
 
 entity.o: entity.cpp
 	g++ -c entity.cpp
