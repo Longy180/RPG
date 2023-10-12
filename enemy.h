@@ -24,7 +24,7 @@ class Enemy : public Character {
   bool isAlive();
   void die();
 
-  bool isHit(int target_x, int target_y, int target_depth);
+  bool isInProximityToPlayer(int target_x, int target_y, int target_depth);
 
   void draw(sf::RenderWindow* win);
 

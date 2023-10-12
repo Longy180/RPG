@@ -16,6 +16,10 @@ int main() {
   sf::Time elapsedTime;
   sf::View view;
   window.setView(view);
+  bool inCombat = false;
+  Enemy* enemyInProximity = nullptr;
+  sf::Sprite combatTextBox;
+
 
 //Set background
   sf::Texture backgroundTexture;
@@ -31,6 +35,8 @@ int main() {
 
   //Create Enemy
   Enemy enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5);
+  Enemy enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50, 5);
+  Enemy boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 50, 50, 5);
 //Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -39,27 +45,73 @@ int main() {
         window.close();
       }
 
-//Player movement
-      elapsedTime = clock.getElapsedTime();
-      if (elapsedTime.asSeconds() > 0.1) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-          player1.move_left(12);
-          std::cout << "Left" << std::endl;
-          clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-          player1.move_right(12);
-          std::cout << "Right" << std::endl;
-          clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-          player1.move_up(12);
-          std::cout << "Up" << std::endl;
-          clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-          player1.move_down(12);
-          std::cout << "Down" << std::endl;
-          clock.restart();
+      // Combat check and handling
+        if (!inCombat) {
+            // Check for proximity to an enemy
+            if (enemy1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth())) {
+               enemyInProximity = &enemy1;
+            } else if (enemy2.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth())) {
+               enemyInProximity = &enemy2;
+            } else if (boss1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth())) {
+                enemyInProximity = &boss1;
+            }
+
+            //debug stuff
+if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+            inCombat = true;
+}
+
+            if (enemyInProximity) {
+              inCombat = true;
+            // You can add combat initialization logic here
+            }
+        } else {
+            // Handle combat logic here
+            
+
+            // Check for conditions to exit combat
+            if (enemyInProximity == &boss1) {
+              if (!boss1.isAlive())
+              {
+                inCombat = false;
+              }
+            } else if (enemyInProximity == &enemy2) {
+              if (!enemy2.isAlive())
+              {
+                inCombat = false;
+              }
+            } else if (enemyInProximity == &enemy1) {
+              if (!enemy1.isAlive())
+              {
+                inCombat = false;
+              }
+            } 
         }
-      }
+
+// Player movement (Only allowed when not in combat)
+if (!inCombat) {
+    elapsedTime = clock.getElapsedTime();
+    if (elapsedTime.asSeconds() > 0.1) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            player1.move_left(12);
+            std::cout << "Left" << std::endl;
+            clock.restart();
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            player1.move_right(12);
+            std::cout << "Right" << std::endl;
+            clock.restart();
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            player1.move_up(12);
+            std::cout << "Up" << std::endl;
+            clock.restart();
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            player1.move_down(12);
+            std::cout << "Down" << std::endl;
+            clock.restart();
+        }
+    }
+}
+
     }
 
   // Update the view to follow the player
@@ -75,7 +127,19 @@ int main() {
     window.clear();
     window.draw(background);
     enemy1.draw(&window);
+    enemy2.draw(&window);
+    boss1.draw(&window);
     player1.draw(&window);
+    
+    //Combat ui
+    if (inCombat){
+      sf::Texture combatTexture;
+      combatTexture.loadFromFile("images/Textbox.png");
+      sf::Sprite combatTextBox(combatTexture);
+      combatTextBox.setPosition(view.getCenter().x - combatTextBox.getGlobalBounds().width / 4, view.getCenter().y + 90);
+      combatTextBox.setScale(0.5,0.5);
+      window.draw(combatTextBox);
+    }
 
     window.display();
   }

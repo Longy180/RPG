@@ -15,6 +15,8 @@ void Player::draw(sf::RenderWindow* win){
   win->draw(entitySprite); 
   }
 
+//Get hitbox depth
+int Player::get_depth() { return _depth; }
 
 //Movement of player
 void Player::move_right(float distance) {

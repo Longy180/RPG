@@ -11,17 +11,17 @@
 
 Enemy::Enemy(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage)
 : Character(spriteLocation, positionX, positionY, maxHealth, currHealth, damage) {
-  _depth = 10;
+  _depth = 100;
   
   alive = true;
 }
-int Enemy::get_x() { return body->getPosition().x; }
-int Enemy::get_y() { return body->getPosition().y; }
+int Enemy::get_x() { return entitySprite.getPosition().x; }
+int Enemy::get_y() { return entitySprite.getPosition().y; }
 int Enemy::get_depth() { return _depth; }
 bool Enemy::isAlive() { return alive; }
 void Enemy::die() { alive = false; }
 
-bool Enemy::isHit(int target_x, int target_y, int target_depth) {
+bool Enemy::isInProximityToPlayer(int target_x, int target_y, int target_depth) {
   bool hit = false;
   int x = get_x();
   int y = get_y();
