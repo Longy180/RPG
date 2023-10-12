@@ -11,7 +11,7 @@
 #include "character.h"
 #include "entity.h"
 int main() {
-  sf::RenderWindow window(sf::VideoMode(1300, 732), "They stole your dog.");
+  sf::RenderWindow window(sf::VideoMode(1300, 732), "Dog Thief");
   sf::Clock clock;
   sf::Time elapsedTime;
   sf::View view;
