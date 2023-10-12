@@ -9,6 +9,7 @@ class Entity {
   sf::Sprite entitySprite;
 
  public:
+  Entity();
   Entity(std::string spriteLocation, int positionX, int positionY);
   int get_x();
   int get_y();
