@@ -31,6 +31,8 @@ int main() {
 
   //Create Enemy
   Enemy enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5);
+  Enemy enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50, 5);
+  Enemy boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 50, 50, 5);
 //Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -75,6 +77,8 @@ int main() {
     window.clear();
     window.draw(background);
     enemy1.draw(&window);
+    enemy2.draw(&window);
+    boss1.draw(&window);
     player1.draw(&window);
 
     window.display();
