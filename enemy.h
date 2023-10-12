@@ -7,22 +7,22 @@
 #include <random>
 
 #include "entity.h"
+#include"character.h"
 
-class Enemy : public Entity {
+class Enemy : public Character {
  private:
   sf::RectangleShape* body;
   bool alive;
   int _depth;
 
  public:
-  Enemy(std::string spriteLocation, int positionX, int positionY);
+  Enemy(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage);
 
   int get_x();
   int get_y();
   int get_depth();
   bool isAlive();
   void die();
-  void spawn(int x, int y);
 
   bool isHit(int target_x, int target_y, int target_depth);
 

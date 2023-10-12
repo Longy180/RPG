@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-// #include "enemy.h"
+#include "enemy.h"
 #include "map.h"
 #include "player.h"
 #include "character.h"
@@ -29,6 +29,8 @@ int main() {
   int maxHealth = 100, currHealth = 100, damage = 10, currGold = 0;
   Player player1(spriteLocation,startingX, startingY, maxHealth, currHealth, damage, currGold);
 
+  //Create Enemy
+  Enemy enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5);
 //Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -72,6 +74,7 @@ int main() {
   //Clear and Draw window
     window.clear();
     window.draw(background);
+    enemy1.draw(&window);
     player1.draw(&window);
 
     window.display();
