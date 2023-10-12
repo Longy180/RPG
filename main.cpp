@@ -40,19 +40,19 @@ int main() {
 //Player movement
       elapsedTime = clock.getElapsedTime();
       if (elapsedTime.asSeconds() > 0.1) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
           player1.move_left(12);
           std::cout << "Left" << std::endl;
           clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
           player1.move_right(12);
           std::cout << "Right" << std::endl;
           clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
           player1.move_up(12);
           std::cout << "Up" << std::endl;
           clock.restart();
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
           player1.move_down(12);
           std::cout << "Down" << std::endl;
           clock.restart();
