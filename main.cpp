@@ -10,6 +10,7 @@
 #include "player.h"
 #include "character.h"
 #include "entity.h"
+#include "ranger.h"
 int main() {
   sf::RenderWindow window(sf::VideoMode(1300, 732), "Dog Thief");
   sf::Clock clock;
@@ -28,10 +29,7 @@ int main() {
   background.setPosition(0, 0);
 
 //Create Player
-  std::string spriteLocation = "Sprites/halfling ranger/HalflingRangerIdleSide.gif";
-  int startingX = 200, startingY =200;
-  int maxHealth = 100, currHealth = 100, damage = 10, currGold = 0;
-  Player player1(spriteLocation,startingX, startingY, maxHealth, currHealth, damage, currGold);
+  Ranger player1;
 
   //Create Enemy
   Enemy enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5);
