@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
-
+#include <iostream>
 #include "entity.h"
 #include"character.h"
 
@@ -27,9 +27,11 @@ bool Enemy::isInProximityToPlayer(int target_x, int target_y, int target_depth) 
   int y = get_y();
   float dist_between =
       sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y));
-  if (dist_between < (_depth + target_depth)) {
+  if (dist_between < (100)) {
     hit = true;
   }
+
+  std::cout << "Player x: " << target_x << "  Player y: " << target_y << "  Distance between: " << dist_between << "  Random greater than num: " << (100) << "\n";
   return hit;
 }
 
