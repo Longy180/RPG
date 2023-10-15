@@ -7,6 +7,7 @@
 Player::Player(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage, int currGold)
 : Character(spriteLocation, positionX, positionY, maxHealth, currHealth, damage) {
   Player::currGold = currGold;
+  Player::_depth = 100;
 }
 
 

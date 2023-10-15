@@ -52,22 +52,55 @@ int main() {
       }
 
       // Combat check and handling
-      if (!inCombat) {
-        // Check for proximity to an enemy
-        if (enemy1.isInProximityToPlayer(player1.get_x(), player1.get_y(),
-                                         player1.get_depth())) {
-          enemyInProximity = &enemy1;
-        } else if (enemy2.isInProximityToPlayer(
-                       player1.get_x(), player1.get_y(), player1.get_depth())) {
-          enemyInProximity = &enemy2;
-        } else if (boss1.isInProximityToPlayer(player1.get_x(), player1.get_y(),
-                                               player1.get_depth())) {
-          enemyInProximity = &boss1;
-        }
 
-        // debug stuff
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
-          inCombat = true;
+        if (!inCombat) {
+            // Check for proximity to an enemy
+            if (enemy1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) == true && enemy1.isAlive() == true) {
+               enemyInProximity = &enemy1;
+            } else if (enemy2.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) && enemy2.isAlive()) {
+               enemyInProximity = &enemy2;
+            } else if (boss1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) && boss1.isAlive()) {
+                enemyInProximity = &boss1;
+            }
+
+            //debug stuff
+if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+            inCombat = true;
+}
+            if (enemyInProximity) {
+              inCombat = true;
+            // You can add combat initialization logic here
+            std::cout << "A battle has begun \n";
+            bool playerTurn = true;
+            }
+        } else {
+            // Handle combat logic here
+            bool playerTurn = true;
+            while(enemyInProximity->get_Health() > 0){
+              std::cout << "You: \n" << "Health: " << player1.get_Health() << "/" << player1.get_maxHealth();
+              std::cout << "\n Enemy: \n" << "Health: " << enemyInProximity->get_Health() << "/" << enemyInProximity->get_maxHealth() << "\n";
+              if (playerTurn == true){
+                std::cout << "Select attack1, attack2 or attack3\n";
+                int moveChosen;
+                std::cin >> moveChosen;
+                if (moveChosen == 1){
+                  player1.stab(enemyInProximity);
+                }else if (moveChosen == 2){
+                  player1.volley(enemyInProximity);
+                }else if(moveChosen == 3){
+                  player1.survivalSkills();
+                }
+                playerTurn = false;
+              }else{
+                player1.takeDamage(enemyInProximity->get_damage());
+                playerTurn = true;
+              }
+            }
+            enemyInProximity->die();
+            enemyInProximity = nullptr;
+            inCombat = false;            
+            std::cout << "You won! \n";
+
         }
 
         if (enemyInProximity) {
@@ -129,15 +162,24 @@ int main() {
     // Set the view's size to control the area visible on the screen
     view.setSize(sf::Vector2f(800, 450));
 
-    // Apply the view to the window
-    window.setView(view);
+  // Apply the view to the window
+  window.setView(view);
+  // Create chest entity
+  //Clear and Draw window
 
-    // Clear and Draw window
     window.clear();
     window.draw(background);
-    enemy1.draw(&window);
-    enemy2.draw(&window);
-    boss1.draw(&window);
+    if(enemy1.isAlive() == true){
+      enemy1.draw(&window);
+    }else{
+      
+    }
+    if(enemy2.isAlive() == true){
+      enemy2.draw(&window);
+    }
+    if(boss1.isAlive() == true){
+      boss1.draw(&window);
+    }
     player1.draw(&window);
     mapCollision.drawRectangles(window);
 

@@ -27,11 +27,11 @@ bool Enemy::isInProximityToPlayer(int target_x, int target_y, int target_depth) 
   int y = get_y();
   float dist_between =
       sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y));
-  if (dist_between < (100)) {
+  if (dist_between < (_depth + target_depth)) {
     hit = true;
   }
-
-  std::cout << "Player x: " << target_x << "  Player y: " << target_y << "  Distance between: " << dist_between << "  Random greater than num: " << (100) << "\n";
+  // collision code not working consistantly, use this line to help test it
+  std::cout << "Player x: " << target_x << "  Player y: " << target_y << "  Target_depth: " << (_depth + target_depth) << "  Distance between: " << dist_between << "\n";
   return hit;
 }
 
