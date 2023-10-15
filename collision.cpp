@@ -31,9 +31,9 @@ void Collision::drawRectangles(sf::RenderWindow& window) {
   }
 }
 
-bool Collision::willHit(Player& player) {
-  sf::Vector2f playerPosition = player.getPosition();
-  if (player1.get_x() + 12 player1.get_y()) }
+// bool Collision::willHit(Player& player) {
+//   sf::Vector2f playerPosition = player.getPosition();
+//   if (playerPosition.get_x() + 12 player1.get_y()) }
 
 // bool Collision::willHitDown(){
 // if player1.get_x()  player1.get_y()

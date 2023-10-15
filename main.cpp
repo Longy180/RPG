@@ -41,6 +41,8 @@ int main() {
               50, 5);
 
   // Create Collisions
+  Collision mapCollision;
+
   // Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -178,6 +180,7 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
       boss1.draw(&window);
     }
     player1.draw(&window);
+    mapCollision.drawRectangles(window);
     
 
     // Combat ui
