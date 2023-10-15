@@ -24,7 +24,7 @@ int main() {
 
 //Set background
   sf::Texture backgroundTexture;
-  backgroundTexture.loadFromFile("images/GameMap.png");
+  backgroundTexture.loadFromFile("images/GameMap1.png");
   sf::Sprite background(backgroundTexture);
   background.setPosition(0, 0);
 
