@@ -28,6 +28,7 @@ int Entity::get_x(){
 int Entity::get_y(){ 
     return entitySprite.getPosition().y; 
 }
+
 sf::Vector2f Entity::get_EntityPosition(){
   return entitySprite.getPosition();
 }

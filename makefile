@@ -18,6 +18,7 @@ mage.o: mage.cpp
 
 fighter.o: fighter.cpp
 	g++ -c fighter.cpp
+	
 enemy.o: enemy.cpp
 	g++ -c enemy.cpp
 
