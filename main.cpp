@@ -41,8 +41,6 @@ int main() {
               50, 5);
 
   // Create Collisions
-  Collision mapCollision;
-
   // Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -106,8 +104,7 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
         if (enemyInProximity) {
           inCombat = true;
           // You can add combat initialization logic here
-        }
-      } else {
+        }else {
         // Handle combat logic here
 
         // Check for conditions to exit combat
@@ -181,7 +178,7 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
       boss1.draw(&window);
     }
     player1.draw(&window);
-    mapCollision.drawRectangles(window);
+    
 
     // Combat ui
     if (inCombat) {
