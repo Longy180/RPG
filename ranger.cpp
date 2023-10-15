@@ -8,11 +8,13 @@ Ranger::Ranger() : Player((std::string)"Sprites/halfling ranger/HalflingRangerId
 
 }
 
-void Ranger::stab(Enemy * opponent){
+//stab
+void Ranger::attack1(Enemy * opponent){
 opponent->set_Health(opponent->get_Health() - Ranger::damage);
 }
 
-void Ranger::volley(Enemy * opponent){
+//volley
+void Ranger::attack2(Enemy * opponent){
     if ((rand()%10 + 1) >= 4){
         opponent->set_Health(opponent->get_Health() - (Ranger::damage * 1.5));
     }else{
@@ -20,7 +22,8 @@ void Ranger::volley(Enemy * opponent){
     }
 }
 
-void Ranger::survivalSkills(){
+//survival skills
+void Ranger::heal(){
     if(currHealth + 15 > maxHealth){
         currHealth = maxHealth;
     }else{

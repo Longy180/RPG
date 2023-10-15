@@ -48,7 +48,30 @@ bool Player::isHit(int t_x, int t_y, int t_depth) {
   return hit;
 }
 
+//Virtual functions
+void Player::attack1(Enemy * opponent){
+opponent->set_Health(opponent->get_Health() - Player::damage);
+}
+void Player::attack2(Enemy * opponent){
+    if ((rand()%10 + 1) >= 4){
+        opponent->set_Health(opponent->get_Health() - (Player::damage * 1.5));
+    }else{
+        std::cout << "Your volley missed\n";
+    }
+}
+void Player::heal(){
+    if(currHealth + 15 > maxHealth){
+        currHealth = maxHealth;
+    }else{
+    currHealth += 15;   
+    }
+}
+void Player::takeDamage(int damage){
+currHealth = currHealth - damage;
+}
+
+
 //Destructor
 Player::~Player(){ 
-  delete entityBody;
+
 }

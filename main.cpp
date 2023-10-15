@@ -12,8 +12,78 @@
 #include "map.h"
 #include "player.h"
 #include "ranger.h"
+#include "mage.h"
+#include "fighter.h"
+    
+
+
 int main() {
-  sf::RenderWindow window(sf::VideoMode(1300, 732), "Dog Thief");
+  sf::RenderWindow window(sf::VideoMode(1300, 732), "Dog Thief", sf::Style::Close);
+    sf::Text text;
+    sf::Font font;
+    if (!font.loadFromFile("Fonts/VideoGame_Font.ttf")) {
+        std::cout << "error loading font\n";
+    }
+    text.setFont(font);
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::White);
+    text.setString("Choose your class:\n1. Fighter\n2. Mage\n3. Ranger");
+
+    text.setPosition(20.0f, 20.0f);
+
+    int playerClass = 0;
+    bool validChoice = false;
+
+    //Initialise player
+    Player player1((std::string)"Sprites/halfling ranger/HalflingRangerIdleSide.gif", 200, 200, 100, 100, 10, 0);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (event.type == sf::Event::TextEntered) {
+                if (event.text.unicode >= '1' && event.text.unicode <= '3') {
+                    playerClass = event.text.unicode - '0';
+                    validChoice = true;
+                }
+            }
+        }
+
+        window.clear();
+        window.draw(text);
+        window.display();
+
+
+
+        if (validChoice) {
+            // Based on the player's choice, set the player's class
+            switch (playerClass) {
+                case 1: // Fighter
+                    std::cout << "You chose Fighter." << std::endl;
+                      // Create Player
+                      player1 = Fighter();
+                    break;
+                case 2: // Mage
+                    std::cout << "You chose Mage." << std::endl;
+                    // Create Player
+                      player1 = Mage();
+                    break;
+                case 3: // Ranger
+                    std::cout << "You chose Ranger." << std::endl;
+                    // Create Player
+                      player1 = Ranger();
+                    break;
+                default:
+                    // Handle invalid choice
+                    std::cout << "Invalid choice. Please choose 1, 2, or 3." << std::endl;
+            }
+            break;
+        }
+    }
+
+
   sf::Clock clock;
   sf::Time elapsedTime;
   sf::View view;
@@ -28,9 +98,6 @@ int main() {
   backgroundTexture.loadFromFile("images/GameMap4.png");
   sf::Sprite background(backgroundTexture);
   background.setPosition(0, 0);
-
-  // Create Player
-  Ranger player1;
 
   // Create Enemy
   Enemy enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50,
@@ -82,11 +149,11 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
                 int moveChosen;
                 std::cin >> moveChosen;
                 if (moveChosen == 1){
-                  player1.stab(enemyInProximity);
+                  player1.attack1(enemyInProximity);
                 }else if (moveChosen == 2){
-                  player1.volley(enemyInProximity);
+                  player1.attack2(enemyInProximity);
                 }else if(moveChosen == 3){
-                  player1.survivalSkills();
+                  player1.heal();
                 }
                 playerTurn = false;
               }else{
@@ -190,6 +257,7 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
           view.getCenter().y + 90);
       combatTextBox.setScale(0.5, 0.5);
       window.draw(combatTextBox);
+
     }
 
     window.display();
