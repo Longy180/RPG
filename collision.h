@@ -16,11 +16,8 @@ class Collision {
 
   public:
     Collision();
-    void removeCollision();
-    bool willHitLeft();
-    bool willHitRight();
-    bool willHitUp();
-    bool willHitDown();
+    // void removeCollision();
+    bool willHit(Player& player);
     void drawRectangles(sf::RenderWindow& window);
 };
 
