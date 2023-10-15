@@ -2,15 +2,17 @@
 #include "player.h"
 #include <string>
 #include <iostream>
-Mage::Mage() : Player((std::string)"Sprites/halfling ranger/HalflingRangerIdleSide.gif", 200, 200, 100, 100, 10, 0){
+Mage::Mage() : Player((std::string)"Sprites/halfling assassin/HalflingAssassinIdleSide.gif", 200, 200, 100, 100, 10, 0){
 
 }
 
-void Mage::cast(Enemy * opponent){
+//Cast Fireball
+void Mage::attack1(Enemy * opponent){
 opponent->set_Health(opponent->get_Health() - Mage::damage);
 }
 
-void Mage::summon(Enemy * opponent){
+//Summon Lightning
+void Mage::attack2(Enemy * opponent){
 if ((rand()%10 + 1) >= 2){
         opponent->set_Health(opponent->get_Health() - (Mage::damage * 1.5));
     }else{
@@ -18,7 +20,8 @@ if ((rand()%10 + 1) >= 2){
     }
 }
 
-void Mage::meditate(){
+//meditate
+void Mage::heal(){
 if(currHealth + 5 > maxHealth){
         currHealth = maxHealth;
     }else{
