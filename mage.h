@@ -8,9 +8,9 @@ private:
 
 public:
 Mage();
-void cast(Enemy * opponent);
-void summon(Enemy * opponent);
-void meditate(); 
+void attack1(Enemy * opponent);
+void attack2(Enemy * opponent);
+void heal(); 
 void takeDamage(int damage);
 };
 #endif

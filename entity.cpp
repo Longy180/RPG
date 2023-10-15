@@ -11,7 +11,6 @@ Entity::Entity(){
 }
 
 Entity::Entity(std::string spriteLocation,int positionX, int positionY) : entityBody(new sf::Texture) {
-
   if (!entityBody->loadFromFile(spriteLocation)) {
     std::cout << "Error loading player model." << std::endl;
   }
@@ -40,5 +39,5 @@ sf::Sprite Entity::get_EntitySprite(){
 
 //Destructor
 Entity::~Entity(){
-    delete entityBody;
+
 }

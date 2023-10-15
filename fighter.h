@@ -8,9 +8,9 @@ private:
 
 public:
 Fighter();
-void tackle(Enemy * opponent);
-void takeDown(Enemy * opponent);
-void recover(); 
+void attack1(Enemy * opponent);
+void attack2(Enemy * opponent);
+void heal(); 
 void takeDamage(int damage);
 };
 #endif
