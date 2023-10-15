@@ -110,6 +110,11 @@ int main() {
   // Create Collisions
   Collision mapCollision;
 
+
+  //Initiate player turn and move chosen
+  bool playerTurn = true;
+  int moveChosen;
+
   // Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -142,13 +147,12 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
             }
         } else {
             // Handle combat logic here
-            bool playerTurn = true;
+            playerTurn = true;
             while(enemyInProximity->get_Health() > 0){
               std::cout << "You: \n" << "Health: " << player1.get_Health() << "/" << player1.get_maxHealth();
               std::cout << "\n Enemy: \n" << "Health: " << enemyInProximity->get_Health() << "/" << enemyInProximity->get_maxHealth() << "\n";
               if (playerTurn == true){
                 std::cout << "Select attack1, attack2 or attack3\n";
-                int moveChosen;
                 std::cin >> moveChosen;
                 if (moveChosen == 1){
                   player1.attack1(enemyInProximity);
@@ -260,9 +264,20 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
           view.getCenter().y + 90);
       combatTextBox.setScale(0.5, 0.5);
       window.draw(combatTextBox);
+      switch (playerClass) {
+        case 1: // Fighter
+          //fighter moves on screen
 
+          break;
+        case 2: // Mage
+          //Mage moves on screen
+          break;
+        case 3: // Ranger
+          //Ranger moves on screen
+          break;
+      }
+      window.draw(text);
     }
-
     window.display();
   }
 
