@@ -2,12 +2,14 @@
 #include "character.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+#include "item.h"
 //Constructor, sets default player sprite and position
 Player::Player(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage, int currGold)
 : Character(spriteLocation, positionX, positionY, maxHealth, currHealth, damage) {
   Player::currGold = currGold;
   Player::_depth = 100;
+  inventory = new Item*[1];
+  currInventorySize = 0;
 }
 
 
@@ -47,6 +49,26 @@ bool Player::isHit(int t_x, int t_y, int t_depth) {
 
   return hit;
 }
+void Player::addToInventory(Item* item) {
+    Item** newInventory = new Item*[currInventorySize + 1];
+    for (int i = 0; i < currInventorySize; i++) {
+      newInventory[i] = inventory[i];
+    }
+    newInventory[currInventorySize] = item;
+    for (int i = 0; i < currInventorySize; i++) {
+        delete inventory[i];
+    }
+    delete[] inventory;
+    inventory = newInventory;
+    currInventorySize++;
+}
+
+Item* Player::getInventoryItem(int index) {
+    if (index >= 0 && index < currInventorySize) {
+        return inventory[index];
+    }
+    return nullptr;
+}
 
 //Virtual functions
 void Player::attack1(Enemy * opponent){
@@ -70,8 +92,10 @@ void Player::takeDamage(int damage){
 currHealth = currHealth - damage;
 }
 
-
 //Destructor
-Player::~Player(){ 
-
+Player::~Player() { 
+    for (int i = 0; i < currInventorySize; i++) {
+        delete inventory[i];
+    }
+    delete[] inventory;
 }

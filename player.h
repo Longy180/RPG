@@ -4,11 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include "character.h"
 #include "enemy.h"
+#include "item.h" 
 class Player : public Character{
  protected:
   int currGold;
   int _depth;
-  //Inventory, will need to be added to initialiser
+  Item ** inventory;
+  int  currInventorySize;
  public:
   Player(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage, int currGold);
   
@@ -23,8 +25,8 @@ class Player : public Character{
   virtual void attack2(Enemy * opponent);
   virtual void heal(); 
   virtual void takeDamage(int damage);
-
-
+  void addToInventory(Item* item);
+  Item* getInventoryItem(int index);
   void draw(sf::RenderWindow* win);
   ~Player();
 };
