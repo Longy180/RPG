@@ -1,19 +1,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <string>
 #include <SFML/Graphics.hpp>
+#include <string>
+
 #include "character.h"
 #include "enemy.h"
-#include "item.h" 
-class Player : public Character{
+#include "item.h"
+class Player : public Character {
  protected:
   int currGold;
   int _depth;
-  Item ** inventory;
-  int  currInventorySize;
+  Item** inventory;
+  int currInventorySize;
+
  public:
-  Player(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage, int currGold);
-  
+  Player(std::string spriteLocation, int positionX, int positionY,
+         int maxHealth, int currHealth, int damage, int currGold);
 
   void move_down(float distance);
   void move_up(float distance);
@@ -21,9 +23,9 @@ class Player : public Character{
   void move_right(float distance);
   bool isHit(int t_x, int t_y, int t_depth);
   int get_depth();
-  virtual void attack1(Enemy * opponent);
-  virtual void attack2(Enemy * opponent);
-  virtual void heal(); 
+  virtual void attack1(Enemy* opponent);
+  virtual void attack2(Enemy* opponent);
+  virtual void heal();
   virtual void takeDamage(int damage);
   void addToInventory(Item* item);
   Item* getInventoryItem(int index);

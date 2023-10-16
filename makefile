@@ -1,5 +1,5 @@
-output: item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o main.o 
-	g++  item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
+output: item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o 
+	g++  item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
 
 entity.o: entity.cpp
 	g++ -c entity.cpp
@@ -36,6 +36,9 @@ main.o: main.cpp
 
 collision.o: collision.cpp
 	g++ -c collision.cpp
+
+game.o: game.cpp
+	g++ -c game.cpp
 
 clean:
 	rm *.o run
