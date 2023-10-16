@@ -1,5 +1,5 @@
-output: item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o 
-	g++  item.o oldWeapon.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
+output: item.o attackBoost.o healthBoost.o healthPotion.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o 
+	g++  item.o attackBoost.o healthBoost.o healthPotion.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
 
 entity.o: entity.cpp
 	g++ -c entity.cpp
@@ -28,8 +28,14 @@ map.o: map.cpp
 item.o: item.cpp
 	g++ -c item.cpp
 
-oldWeapon.o: oldWeapon.cpp
-	g++ -c oldWeapon.cpp
+attackBoost.o: attackBoost.cpp
+	g++ -c attackBoost.cpp
+
+healthBoost.o: healthBoost.cpp
+	g++ -c healthBoost.cpp
+
+healthPotion.o: healthPotion.cpp
+	g++ -c healthPotion.cpp
 
 main.o: main.cpp
 	g++ -c main.cpp 

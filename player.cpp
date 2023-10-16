@@ -12,8 +12,10 @@ Player::Player(std::string spriteLocation, int positionX, int positionY,
                 damage) {
   Player::currGold = currGold;
   Player::_depth = 100;
-  inventory = new Item*[1];
+  maxInventorySize = 4;
+  inventory = new Item*[maxInventorySize];
   currInventorySize = 0;
+  
 }
 
 // draws player sprite to game window
@@ -57,22 +59,13 @@ void Player::add_Gold(int gold){
 currGold += gold;
 }
 void Player::addToInventory(Item* item) {
-  Item** newInventory = new Item*[currInventorySize + 1];
-  if(currInventorySize > 0){
-   for (int i = 0; i < currInventorySize; i++) {
-    newInventory[i] = inventory[i];
-    }
-  newInventory[currInventorySize] = item;
-  for (int i = 0; i < currInventorySize; i++) {
-    delete inventory[i];
-  } 
+  if(currInventorySize < maxInventorySize){
+    inventory[currInventorySize] = item;
+    currInventorySize++;
   }else{
-    newInventory[currInventorySize] = item;
+  std::cout<<"Inventory is full";
   }
-
-  delete[] inventory;
-  inventory = newInventory;
-  currInventorySize++;
+  
 }
 
 Item* Player::getInventoryItem(int index) {

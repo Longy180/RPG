@@ -16,7 +16,6 @@
 #include "item.h"
 #include "mage.h"
 #include "map.h"
-#include "oldWeapon.h"
 #include "player.h"
 #include "ranger.h"
 
