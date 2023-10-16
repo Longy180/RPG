@@ -44,9 +44,14 @@ Game::Game()
   combatText.setCharacterSize(24);
   combatText.setFillColor(sf::Color::White);
 
+  shopText.setFont(font);
+  shopText.setCharacterSize(24);
+  shopText.setFillColor(sf::Color::White);
+
   playerClass = 0;
   validChoice = false;
   inCombat = false;
+  inShop = false;
   enemyInProximity = nullptr;
   mapOpen = true;
 
@@ -179,8 +184,12 @@ void Game::movement(){
           }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
         //Shop logic
         int purchaseChoice = 0;
+        inShop = true;
+        shopText.setString(
+              "Welcome to the shop\n");
+        std::cout << "Welcome to the shop\n";
         while(purchaseChoice != 4){
-        std::cout << "Welcome to the shop\n" << "You have: " << player1.get_Gold() << " Gold.\n"
+        std::cout << "You have: " << player1.get_Gold() << " Gold.\n"
         << "To purchase a Tough Ring for 10 gold press  1.\n"
         << "To purchase a Tenacity Ring for 10 gold press 2.\n"
         << "To purchase a Health Potion for 10 gold press 3.\n"
@@ -218,10 +227,14 @@ void Game::movement(){
             std::cout << "You received a Health Potion! \n";
             std::cout << "Open your inventory to use an item. \n";
           }
-        }  
+        }else if (purchaseChoice == 4){
+          inShop == false;
+        }
         }
         
         clock.restart();
+          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+            std::cout << "Inventory: \n";
           }
         }
       }
@@ -399,4 +412,20 @@ void Game::render() {
                            window.getView().getCenter().y + 110);
     window.draw(combatText);
   }
+if(inShop == true){
+sf::Texture combatTexture;
+    combatTexture.loadFromFile("images/Textbox.png");
+    sf::Sprite combatTextBox(combatTexture);
+    combatTextBox.setPosition(
+        view.getCenter().x - combatTextBox.getGlobalBounds().width / 4,
+        view.getCenter().y + 90);
+    combatTextBox.setScale(0.5, 0.5);
+    window.draw(combatTextBox);
+    shopText.setPosition(window.getView().getCenter().x - 200,
+                           window.getView().getCenter().y + 110);
+    window.draw(shopText);
 }
+
+}
+
+
