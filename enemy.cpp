@@ -30,8 +30,6 @@ bool Enemy::isInProximityToPlayer(int target_x, int target_y, int target_depth) 
   if (dist_between < (_depth + target_depth)) {
     hit = true;
   }
-  // collision code not working consistantly, use this line to help test it
-  std::cout << "Player x: " << target_x << "  Player y: " << target_y << "  Target_depth: " << (_depth + target_depth) << "  Distance between: " << dist_between << "\n";
   return hit;
 }
 

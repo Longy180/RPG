@@ -14,7 +14,8 @@
 #include "ranger.h"
 #include "mage.h"
 #include "fighter.h"
-    
+#include "item.h"
+#include "oldWeapon.h"
 
 
 int main() {
@@ -133,15 +134,21 @@ int main() {
 
       // Combat check and handling
 
-        if (!inCombat) {
-            // Check for proximity to an enemy
-            if (enemy1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) == true && enemy1.isAlive() == true) {
-               enemyInProximity = &enemy1;
-            } else if (enemy2.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) && enemy2.isAlive()) {
-               enemyInProximity = &enemy2;
-            } else if (boss1.isInProximityToPlayer(player1.get_x(), player1.get_y(), player1.get_depth()) && boss1.isAlive()) {
-                enemyInProximity = &boss1;
-            }
+      if (!inCombat) {
+        // Check for proximity to an enemy
+        if (enemy1.isInProximityToPlayer(player1.get_x(), player1.get_y(),
+                                         player1.get_depth()) == true &&
+            enemy1.isAlive() == true) {
+          enemyInProximity = &enemy1;
+        } else if (enemy2.isInProximityToPlayer(
+                       player1.get_x(), player1.get_y(), player1.get_depth()) &&
+                   enemy2.isAlive()) {
+          enemyInProximity = &enemy2;
+        } else if (boss1.isInProximityToPlayer(player1.get_x(), player1.get_y(),
+                                               player1.get_depth()) &&
+                   boss1.isAlive()) {
+          enemyInProximity = &boss1;
+        }
 
 
             if (enemyInProximity) {
@@ -180,6 +187,7 @@ int main() {
                     }
                 }
             }
+          
         } else {
             // Handle enemy's attack here, if applicable
             player1.takeDamage(enemyInProximity->get_damage());
@@ -187,13 +195,30 @@ int main() {
         }
     }
 
+            enemyInProximity->die();
+            enemyInProximity = nullptr;
+            inCombat = false;
+            std::cout << "You won! \n";
+            OldWeapon oldBow;
 
-        enemyInProximity->die();
-        enemyInProximity = nullptr;
-        inCombat = false;
-        std::cout << "You won! \n";
+            player1.addToInventory(&oldBow);
 
-}
+            Item* retrievedItem = player1.getInventoryItem(0);
+
+            if (retrievedItem) {
+                // The item exists in the inventory, you can access its properties.
+                int sellPrice = retrievedItem->get_sellPrice();
+                std::cout << "Item Sell Price: " << sellPrice << std::endl;
+            } else {
+                std::cout << "Item not found in inventory." << std::endl;
+            }
+        }
+std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
+      if (enemyInProximity) {
+        inCombat = true;
+        // You can add combat initialization logic here
+      } else {
+        // Handle combat logic here
 
 
       // Player movement (Only allowed when not in combat)
@@ -202,23 +227,31 @@ int main() {
         if (elapsedTime.asSeconds() > 0.1) {
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
               sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            player1.move_left(12);
-            std::cout << "Left" << std::endl;
+            if (mapCollision.willHit(player1) == false) {
+              player1.move_left(12);
+              std::cout << "Left" << std::endl;
+            }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            player1.move_right(12);
-            std::cout << "Right" << std::endl;
+            if (mapCollision.willHit(player1) == false) {
+              player1.move_right(12);
+              std::cout << "Right" << std::endl;
+            }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            player1.move_up(12);
-            std::cout << "Up" << std::endl;
+            if (mapCollision.willHit(player1) == false) {
+              player1.move_up(12);
+              std::cout << "Up" << std::endl;
+            }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            player1.move_down(12);
-            std::cout << "Down" << std::endl;
+            if (mapCollision.willHit(player1) == false) {
+              player1.move_down(12);
+              std::cout << "Down" << std::endl;
+            }
             clock.restart();
           }
           // Closes the map until pressed twice
@@ -232,27 +265,25 @@ int main() {
     // Set the view's size to control the area visible on the screen
     view.setSize(sf::Vector2f(800, 450));
 
-  // Apply the view to the window
-  window.setView(view);
-  // Create chest entity
-  //Clear and Draw window
+    // Apply the view to the window
+    window.setView(view);
+    // Create chest entity
+    // Clear and Draw window
 
     window.clear();
     window.draw(background);
-    if(enemy1.isAlive() == true){
+    if (enemy1.isAlive() == true) {
       enemy1.draw(&window);
-    }else{
-      
+    } else {
     }
-    if(enemy2.isAlive() == true){
+    if (enemy2.isAlive() == true) {
       enemy2.draw(&window);
     }
-    if(boss1.isAlive() == true){
+    if (boss1.isAlive() == true) {
       boss1.draw(&window);
     }
     player1.draw(&window);
     mapCollision.drawRectangles(window);
-    
 
     // Combat ui
     if (inCombat) {
