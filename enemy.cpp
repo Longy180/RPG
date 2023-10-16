@@ -37,4 +37,4 @@ void Enemy::draw(sf::RenderWindow* win){
   win->draw(entitySprite); 
   }
 
-Enemy::~Enemy() { delete this->body; }
+Enemy::~Enemy() {}

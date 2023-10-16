@@ -1,34 +1,36 @@
 #include "mage.h"
-#include "player.h"
-#include <string>
+
 #include <iostream>
-Mage::Mage() : Player((std::string)"Sprites/halfling assassin/HalflingAssassinIdleSide.gif", 200, 200, 100, 100, 10, 0){
+#include <string>
 
+#include "player.h"
+Mage::Mage()
+    : Player(
+          (std::
+               string) "Sprites/halfling assassin/HalflingAssassinIdleSide.gif",
+          200, 200, 100, 100, 10, 0) {}
+
+// Cast Fireball
+void Mage::attack1(Enemy* opponent) {
+  opponent->set_Health(opponent->get_Health() - Mage::damage);
 }
 
-//Cast Fireball
-void Mage::attack1(Enemy * opponent){
-opponent->set_Health(opponent->get_Health() - Mage::damage);
+// Summon Lightning
+void Mage::attack2(Enemy* opponent) {
+  if ((rand() % 10 + 1) >= 2) {
+    opponent->set_Health(opponent->get_Health() - (Mage::damage * 1.5));
+  } else {
+    std::cout << "Your summon failed\n";
+  }
 }
 
-//Summon Lightning
-void Mage::attack2(Enemy * opponent){
-if ((rand()%10 + 1) >= 2){
-        opponent->set_Health(opponent->get_Health() - (Mage::damage * 1.5));
-    }else{
-        std::cout << "Your summon failed\n";
-    }
+// meditate
+void Mage::heal() {
+  if (currHealth + 5 > maxHealth) {
+    currHealth = maxHealth;
+  } else {
+    currHealth += 5;
+  }
 }
 
-//meditate
-void Mage::heal(){
-if(currHealth + 5 > maxHealth){
-        currHealth = maxHealth;
-    }else{
-    currHealth += 5;   
-    }
-}
-
-void Mage::takeDamage(int damage){
-currHealth = currHealth - damage;
-}
+void Mage::takeDamage(int damage) { currHealth = currHealth - damage; }
