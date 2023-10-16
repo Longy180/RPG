@@ -288,12 +288,6 @@ int main() {
     // Create chest entity
     // Clear and Draw window
 
-    // Printing player coordinates for debugging
-    if (elapsedTime.asSeconds() > 0.1) {
-      std::cout << "x:" << player1.get_x() << "y:" << player1.get_y()
-                << std::endl;
-    }
-
     window.clear();
     window.draw(background);
     if (enemy1.isAlive() == true) {
