@@ -34,3 +34,7 @@ void Mage::heal() {
 }
 
 void Mage::takeDamage(int damage) { currHealth = currHealth - damage; }
+
+Mage::~Mage(){
+
+};

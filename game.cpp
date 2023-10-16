@@ -129,7 +129,6 @@ void Game::handleEvents() {
       if (event.type == sf::Event::Closed) {
         window.close();
       }
-
       // Combat check and handling
 
       if (!inCombat) {
@@ -160,15 +159,8 @@ void Game::handleEvents() {
         bool playerHasChosen = false;
 
         while (enemyInProximity->get_Health() > 0) {
-          std::cout << "You: \n"
-                    << "Health: " << player1.get_Health() << "/"
-                    << player1.get_maxHealth();
-          std::cout << "\n Enemy: \n"
-                    << "Health: " << enemyInProximity->get_Health() << "/"
-                    << enemyInProximity->get_maxHealth() << "\n";
 
           if (playerTurn == true) {
-            std::cout << "Select attack 1, 2, or 3 (Press 1, 2, or 3 key): ";
             playerHasChosen = false;
 
             sf::Event event;
@@ -183,6 +175,12 @@ void Game::handleEvents() {
                   } else if (moveChosen == 3) {
                     player1.heal();
                   }
+                  std::cout << "You: \n"
+                    << "Health: " << player1.get_Health() << "/"
+                    << player1.get_maxHealth();
+                  std::cout << "\n Enemy: \n"
+                    << "Health: " << enemyInProximity->get_Health() << "/"
+                    << enemyInProximity->get_maxHealth() << "\n";
                   playerTurn = false;
                   playerHasChosen = true;
                 }
@@ -193,29 +191,21 @@ void Game::handleEvents() {
             // Handle enemy's attack here, if applicable
             player1.takeDamage(enemyInProximity->get_damage());
             playerTurn = true;
+            std::cout << "You: \n"
+                    << "Health: " << player1.get_Health() << "/"
+                    << player1.get_maxHealth();
+            std::cout << "\n Enemy: \n"
+                    << "Health: " << enemyInProximity->get_Health() << "/"
+                    << enemyInProximity->get_maxHealth() << "\n";
           }
         }
 
         enemyInProximity->die();
         enemyInProximity = nullptr;
         inCombat = false;
-        std::cout << "You won! \n";
-        OldWeapon oldBow;
-
-        player1.addToInventory(&oldBow);
-
-        Item* retrievedItem = player1.getInventoryItem(0);
-
-        if (retrievedItem) {
-          // The item exists in the inventory, you can access its properties.
-          int sellPrice = retrievedItem->get_sellPrice();
-          std::cout << "Item Sell Price: " << sellPrice << std::endl;
-        } else {
-          std::cout << "Item not found in inventory." << std::endl;
-        }
+        player1.set_Gold(15);
       }
 
-      // std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
 
       if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
@@ -271,6 +261,33 @@ void Game::handleEvents() {
               std::cout << "Moving up from collision" << std::endl;
             }
             clock.restart();
+          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+        //Shop logic
+        int purchaseChoice = 0;
+        std::cout << "Welcome to the shop\n" << "You have: " << player1.get_Gold() << "Gold.\n"
+        << "To purchase an Old Bow for 15 gold press  1.";
+        std::cin >> purchaseChoice;
+        if (purchaseChoice == 1){
+          OldWeapon* oldBow = new OldWeapon();
+
+          player1.addToInventory(oldBow);
+          for (int i = 0; i < 3; i++)
+          {
+            Item* retrievedItem = player1.getInventoryItem(0);
+          if (retrievedItem) {
+          // The item exists in the inventory, you can access its properties.
+          int sellPrice = retrievedItem->get_sellPrice();
+          std::cout << "Item Sell Price: " << sellPrice << std::endl;
+        } else {
+          std::cout << "Item not found in inventory." << std::endl;
+        }
+          }
+          
+          
+        }
+        
+
+        
           }
         }
       }

@@ -12,5 +12,6 @@ class Mage : public Player {
   void attack2(Enemy* opponent);
   void heal();
   void takeDamage(int damage);
+  ~Mage();
 };
 #endif
