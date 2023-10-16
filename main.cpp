@@ -214,14 +214,7 @@ int main() {
             }
         }
 std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
-      if (enemyInProximity) {
-        inCombat = true;
-        // You can add combat initialization logic here
-      } else {
-        // Handle combat logic here
 
-
-      // Player movement (Only allowed when not in combat)
       if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
         if (elapsedTime.asSeconds() > 0.1) {
