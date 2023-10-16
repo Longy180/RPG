@@ -29,8 +29,13 @@ int main() {
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
     text.setString("Choose your class:\n1. Fighter\n2. Mage\n3. Ranger");
-
     text.setPosition(20.0f, 20.0f);
+
+    sf::Text combatText;
+    combatText.setFont(font);
+    combatText.setCharacterSize(24);
+    combatText.setFillColor(sf::Color::White);
+    
 
     int playerClass = 0;
     bool validChoice = false;
@@ -65,16 +70,19 @@ int main() {
                     std::cout << "You chose Fighter." << std::endl;
                       // Create Player
                       player1 = Fighter();
+                      combatText.setString("Your Turn:\n1. Tackle\n2. Takedown\n3. Recover");
                     break;
                 case 2: // Mage
                     std::cout << "You chose Mage." << std::endl;
                     // Create Player
                       player1 = Mage();
+                      combatText.setString("Your Turn:\n1. Cast Fireball\n2. Summon Lightning\n3. Meditate");
                     break;
                 case 3: // Ranger
                     std::cout << "You chose Ranger." << std::endl;
                     // Create Player
                       player1 = Ranger();
+                      combatText.setString("Your Turn:\n1. Stab\n2. Volley\n3. Survival Skills");
                     break;
                 default:
                     // Handle invalid choice
@@ -111,6 +119,11 @@ int main() {
   // Create Collisions
   Collision mapCollision;
 
+
+  //Initiate player turn and move chosen
+  bool playerTurn = true;
+  int moveChosen;
+
   // Game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -137,10 +150,7 @@ int main() {
           enemyInProximity = &boss1;
         }
 
-            //debug stuff
-if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
-            inCombat = true;
-}
+
             if (enemyInProximity) {
               inCombat = true;
             // You can add combat initialization logic here
@@ -149,27 +159,42 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
             }
         } else {
             // Handle combat logic here
-            bool playerTurn = true;
-            while(enemyInProximity->get_Health() > 0){
-              std::cout << "You: \n" << "Health: " << player1.get_Health() << "/" << player1.get_maxHealth();
-              std::cout << "\n Enemy: \n" << "Health: " << enemyInProximity->get_Health() << "/" << enemyInProximity->get_maxHealth() << "\n";
-              if (playerTurn == true){
-                std::cout << "Select attack1, attack2 or attack3\n";
-                int moveChosen;
-                std::cin >> moveChosen;
-                if (moveChosen == 1){
-                  player1.attack1(enemyInProximity);
-                }else if (moveChosen == 2){
-                  player1.attack2(enemyInProximity);
-                }else if(moveChosen == 3){
-                  player1.heal();
+            playerTurn = true;
+    bool playerHasChosen = false;
+    
+    while (enemyInProximity->get_Health() > 0) {
+        std::cout << "You: \n" << "Health: " << player1.get_Health() << "/" << player1.get_maxHealth();
+        std::cout << "\n Enemy: \n" << "Health: " << enemyInProximity->get_Health() << "/" << enemyInProximity->get_maxHealth() << "\n";
+
+        if (playerTurn == true) {
+            std::cout << "Select attack 1, 2, or 3 (Press 1, 2, or 3 key): ";
+            playerHasChosen = false;
+
+            sf::Event event;
+            while (window.pollEvent(event) && !playerHasChosen) {
+                if (event.type == sf::Event::TextEntered) {
+                    if (event.text.unicode >= '1' && event.text.unicode <= '3') {
+                        int moveChosen = event.text.unicode - '0';
+                        if (moveChosen == 1) {
+                            player1.attack1(enemyInProximity);
+                        } else if (moveChosen == 2) {
+                            player1.attack2(enemyInProximity);
+                        } else if (moveChosen == 3) {
+                            player1.heal();
+                        }
+                        playerTurn = false;
+                        playerHasChosen = true;
+                    }
                 }
-                playerTurn = false;
-              }else{
-                player1.takeDamage(enemyInProximity->get_damage());
-                playerTurn = true;
-              }
             }
+          
+        } else {
+            // Handle enemy's attack here, if applicable
+            player1.takeDamage(enemyInProximity->get_damage());
+            playerTurn = true;
+        }
+    }
+
             enemyInProximity->die();
             enemyInProximity = nullptr;
             inCombat = false;
@@ -195,21 +220,6 @@ std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
       } else {
         // Handle combat logic here
 
-        // Check for conditions to exit combat
-        if (enemyInProximity == &boss1) {
-          if (!boss1.isAlive()) {
-            inCombat = false;
-          }
-        } else if (enemyInProximity == &enemy2) {
-          if (!enemy2.isAlive()) {
-            inCombat = false;
-          }
-        } else if (enemyInProximity == &enemy1) {
-          if (!enemy1.isAlive()) {
-            inCombat = false;
-          }
-        }
-      }
 
       // Player movement (Only allowed when not in combat)
       if (!inCombat) {
@@ -285,9 +295,9 @@ std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
           view.getCenter().y + 90);
       combatTextBox.setScale(0.5, 0.5);
       window.draw(combatTextBox);
-
+      combatText.setPosition(window.getView().getCenter().x - 200, window.getView().getCenter().y + 110);
+      window.draw(combatText);
     }
-
     window.display();
   }
 
