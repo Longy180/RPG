@@ -14,7 +14,8 @@
 #include "ranger.h"
 #include "mage.h"
 #include "fighter.h"
-    
+#include "item.h"
+#include "oldWeapon.h"
 
 
 int main() {
@@ -171,11 +172,23 @@ if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
             }
             enemyInProximity->die();
             enemyInProximity = nullptr;
-            inCombat = false;            
+            inCombat = false;
             std::cout << "You won! \n";
+            OldWeapon oldBow;
 
+            player1.addToInventory(&oldBow);
+
+            Item* retrievedItem = player1.getInventoryItem(0);
+
+            if (retrievedItem) {
+                // The item exists in the inventory, you can access its properties.
+                int sellPrice = retrievedItem->get_sellPrice();
+                std::cout << "Item Sell Price: " << sellPrice << std::endl;
+            } else {
+                std::cout << "Item not found in inventory." << std::endl;
+            }
         }
-
+std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
       if (enemyInProximity) {
         inCombat = true;
         // You can add combat initialization logic here
