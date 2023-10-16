@@ -113,8 +113,8 @@ int main() {
                5);
   Enemy enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50,
                5);
-  Enemy boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 50,
-              50, 5);
+  Enemy boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 100,
+              100, 10);
 
   // Create Collisions
   Collision mapCollision;
@@ -213,7 +213,8 @@ int main() {
                 std::cout << "Item not found in inventory." << std::endl;
             }
         }
-std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
+
+// std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
 
       if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
@@ -222,28 +223,28 @@ std::cout << "THE CODE EXITS THE FOR STATEMENT" << std::endl;
               sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_left(12);
-              std::cout << "Left" << std::endl;
+              // std::cout << "Left" << std::endl;
             }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_right(12);
-              std::cout << "Right" << std::endl;
+              // std::cout << "Right" << std::endl;
             }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_up(12);
-              std::cout << "Up" << std::endl;
+              // std::cout << "Up" << std::endl;
             }
             clock.restart();
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_down(12);
-              std::cout << "Down" << std::endl;
+              // std::cout << "Down" << std::endl;
             }
             clock.restart();
           }
