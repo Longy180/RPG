@@ -16,10 +16,11 @@
 #include "item.h"
 #include "mage.h"
 #include "map.h"
-#include "oldWeapon.h"
+#include "attackBoost.h"
 #include "player.h"
 #include "ranger.h"
-
+#include "healthBoost.h"
+#include "healthPotion.h"
 Game::Game()
     : window(sf::VideoMode(1300, 732), "Dog Thief", sf::Style::Close),
       player1(
@@ -264,30 +265,49 @@ void Game::handleEvents() {
           }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
         //Shop logic
         int purchaseChoice = 0;
-        std::cout << "Welcome to the shop\n" << "You have: " << player1.get_Gold() << "Gold.\n"
-        << "To purchase an Old Bow for 15 gold press  1.";
+        while(purchaseChoice != 4){
+        std::cout << "Welcome to the shop\n" << "You have: " << player1.get_Gold() << " Gold.\n"
+        << "To purchase a Tough Ring for 10 gold press  1.\n"
+        << "To purchase a Tenacity Ring for 10 gold press 2.\n"
+        << "To purchase a Health Potion for 10 gold press 3.\n"
+        << "To exit the shop press 4.\n";
         std::cin >> purchaseChoice;
         if (purchaseChoice == 1){
-          OldWeapon* oldBow = new OldWeapon();
-
-          player1.addToInventory(oldBow);
-          for (int i = 0; i < 3; i++)
-          {
-            Item* retrievedItem = player1.getInventoryItem(0);
-          if (retrievedItem) {
-          // The item exists in the inventory, you can access its properties.
-          int sellPrice = retrievedItem->get_sellPrice();
-          std::cout << "Item Sell Price: " << sellPrice << std::endl;
-        } else {
-          std::cout << "Item not found in inventory." << std::endl;
-        }
+          AttackBoost* toughRing = new AttackBoost();
+          if(player1.get_Gold() < toughRing ->get_buyPrice()){
+            std::cout << "You do not have enough gold.\n";
+          }else{
+            player1.addToInventory(toughRing);
+            player1.set_Gold(-10);
+            std::cout << "You received a Tough Ring ! \n";
+            toughRing->itemEffect(&player1);
+            std::cout << "Your damage has increased by 3! \n";
           }
-          
-          
+        } else if(purchaseChoice == 2){
+          HealthBoost* tenacityRing = new HealthBoost();
+          if(player1.get_Gold() < tenacityRing ->get_buyPrice()){
+            std::cout << "You do not have enough gold.\n";
+          }else{
+            player1.addToInventory(tenacityRing);
+            player1.set_Gold(-10);
+            std::cout << "You received a Tenacity Ring ! \n";
+            tenacityRing->itemEffect(&player1);
+            std::cout << "Your max health has increased by 25! \n";
+          }
+        }else if(purchaseChoice == 3){
+          HealthPotion* smallPotion = new HealthPotion();
+          if(player1.get_Gold() < smallPotion ->get_buyPrice()){
+            std::cout << "You do not have enough gold.\n";
+          }else{
+            player1.addToInventory(smallPotion);
+            player1.set_Gold(-10);
+            std::cout << "You received a Health Potion! \n";
+            std::cout << "Open your inventory to use an item. \n";
+          }
+        }  
         }
         
-
-        
+        clock.restart();
           }
         }
       }

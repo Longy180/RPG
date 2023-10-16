@@ -12,7 +12,7 @@ class Player : public Character {
   int _depth;
   Item** inventory;
   int currInventorySize;
-
+  int maxInventorySize;
  public:
   Player(std::string spriteLocation, int positionX, int positionY,
          int maxHealth, int currHealth, int damage, int currGold);

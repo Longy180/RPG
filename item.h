@@ -10,5 +10,6 @@ Item(int buyPrice, int sellPrice);
 
 int get_buyPrice();
 int get_sellPrice();
+
 };
 #endif
