@@ -30,6 +30,8 @@ class Game {
   sf::RenderWindow window;
   sf::Text text;
   sf::Text combatText;
+  sf::Text playerHealthText;
+  sf::Text enemyHealthText;
   sf::Font font;
   Player player1;
   int playerClass;
@@ -55,6 +57,8 @@ class Game {
   void update();
   void render();
   void chooseClass();
+  void combat();
+  void movement();
   // Add other private member functions here
 };
 
