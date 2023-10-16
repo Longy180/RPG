@@ -192,7 +192,7 @@ void Game::movement(){
             std::cout << "You do not have enough gold.\n";
           }else{
             player1.addToInventory(toughRing);
-            player1.set_Gold(-10);
+            player1.add_Gold(-10);
             std::cout << "You received a Tough Ring ! \n";
             toughRing->itemEffect(&player1);
             std::cout << "Your damage has increased by 3! \n";
@@ -203,7 +203,7 @@ void Game::movement(){
             std::cout << "You do not have enough gold.\n";
           }else{
             player1.addToInventory(tenacityRing);
-            player1.set_Gold(-10);
+            player1.add_Gold(-10);
             std::cout << "You received a Tenacity Ring ! \n";
             tenacityRing->itemEffect(&player1);
             std::cout << "Your max health has increased by 25! \n";
@@ -214,7 +214,7 @@ void Game::movement(){
             std::cout << "You do not have enough gold.\n";
           }else{
             player1.addToInventory(smallPotion);
-            player1.set_Gold(-10);
+            player1.add_Gold(-10);
             std::cout << "You received a Health Potion! \n";
             std::cout << "Open your inventory to use an item. \n";
           }
