@@ -220,36 +220,58 @@ void Game::handleEvents() {
       if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
         if (elapsedTime.asSeconds() > 0.1) {
+          // Attempting to move LEFT
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
               sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_left(12);
-              // std::cout << "Left" << std::endl;
+              std::cout << "Left" << std::endl;
+            }
+            if (mapCollision.willHit(player1) == true) {
+              player1.move_right(12);
+              std::cout << "Moving right from collision" << std::endl;
             }
             clock.restart();
+
+            // Attempting to move RIGHT
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_right(12);
-              // std::cout << "Right" << std::endl;
+              std::cout << "Right" << std::endl;
+            }
+            if (mapCollision.willHit(player1) == true) {
+              player1.move_left(12);
+              std::cout << "Moving left from collision" << std::endl;
             }
             clock.restart();
+
+            // Attempting to move UP
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_up(12);
-              // std::cout << "Up" << std::endl;
+              std::cout << "Up" << std::endl;
+            }
+            if (mapCollision.willHit(player1) == true) {
+              player1.move_down(12);
+              std::cout << "Moving down from collision" << std::endl;
             }
             clock.restart();
+
+            // Attempting to move DOWN
           } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
                      sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             if (mapCollision.willHit(player1) == false) {
               player1.move_down(12);
-              // std::cout << "Down" << std::endl;
+              std::cout << "Down" << std::endl;
+            }
+            if (mapCollision.willHit(player1) == true) {
+              player1.move_up(12);
+              std::cout << "Moving up from collision" << std::endl;
             }
             clock.restart();
           }
-          // Closes the map until pressed twice
         }
       }
     }
