@@ -21,7 +21,7 @@
 #include "ranger.h"
 
 Game::Game()
-    : window(sf::VideoMode(1300, 732), "Dog Thief", sf::Style::Close),
+    : window(sf::VideoMode(700, 500), "Dog Thief", sf::Style::Close),
       player1(
           (std::string) "Sprites/halfling ranger/HalflingRangerIdleSide.gif",
           200, 200, 100, 100, 10, 0),
@@ -303,6 +303,9 @@ void Game::handleEvents() {
     window.setView(view);
     // Create chest entity
     render();
+
+    //display player coordinates
+    std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
   }
 }
 
