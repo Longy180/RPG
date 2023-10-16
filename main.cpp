@@ -18,7 +18,7 @@
 #include "ranger.h"
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(1300, 732), "Dog Thief",
+  sf::RenderWindow window(sf::VideoMode(700, 500), "Dog Thief",
                           sf::Style::Close);
   sf::Text text;
   sf::Font font;
@@ -221,7 +221,6 @@ int main() {
       if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
         if (elapsedTime.asSeconds() > 0.1) {
-
           // Attempting to move LEFT
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
               sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -288,6 +287,12 @@ int main() {
     window.setView(view);
     // Create chest entity
     // Clear and Draw window
+
+    // Printing player coordinates for debugging
+    if (elapsedTime.asSeconds() > 0.1) {
+      std::cout << "x:" << player1.get_x() << "y:" << player1.get_y()
+                << std::endl;
+    }
 
     window.clear();
     window.draw(background);
