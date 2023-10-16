@@ -17,7 +17,7 @@ class Collision {
   public:
     Collision();
     // void removeCollision();
-    bool willHit(Player& player);
+    bool willHit(Entity& player);
     void drawRectangles(sf::RenderWindow& window);
 };
 

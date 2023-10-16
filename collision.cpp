@@ -31,9 +31,26 @@ void Collision::drawRectangles(sf::RenderWindow& window) {
   }
 }
 
-// bool Collision::willHit(Player& player) {
-//   sf::Vector2f playerPosition = player.getPosition();
-//   if (playerPosition.get_x() + 12 player1.get_y()) }
+// bool Collision::willHit(Entity& player) {
+//   if ((player.get_x() + 12  || player.get_x() - 12 || player.get_y() + 12 ||
+//        player.get_y() - 12)) {
+
+//   }
+// }
+
+bool Collision::willHit(Entity& player) {
+  sf::FloatRect playerBounds = player.get_EntitySprite().getGlobalBounds();
+
+  for (int i = 0; i < 2; i++) {
+    if (playerBounds.intersects(rectangles[i].getGlobalBounds())) {
+      // There's a collision
+      std::cout << "collision" << std::endl;
+      return true;
+    }
+  }
+
+  return false;  // No collision
+}
 
 // bool Collision::willHitDown(){
 // if player1.get_x()  player1.get_y()
