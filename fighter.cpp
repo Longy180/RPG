@@ -31,3 +31,7 @@ void Fighter::heal(){
 void Fighter::takeDamage(int damage){
 currHealth = currHealth - damage;
 }
+
+Fighter::~Fighter(){
+
+}

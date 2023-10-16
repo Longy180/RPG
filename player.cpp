@@ -50,15 +50,26 @@ bool Player::isHit(int t_x, int t_y, int t_depth) {
 
   return hit;
 }
+int Player::get_Gold(){
+return(currGold);
+}
+void Player::set_Gold(int gold){
+currGold += gold;
+}
 void Player::addToInventory(Item* item) {
   Item** newInventory = new Item*[currInventorySize + 1];
-  for (int i = 0; i < currInventorySize; i++) {
+  if(currInventorySize > 0){
+   for (int i = 0; i < currInventorySize; i++) {
     newInventory[i] = inventory[i];
-  }
+    }
   newInventory[currInventorySize] = item;
   for (int i = 0; i < currInventorySize; i++) {
     delete inventory[i];
+  } 
+  }else{
+    newInventory[currInventorySize] = item;
   }
+
   delete[] inventory;
   inventory = newInventory;
   currInventorySize++;

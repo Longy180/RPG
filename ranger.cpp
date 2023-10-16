@@ -21,7 +21,6 @@ void Ranger::attack2(Enemy * opponent){
         std::cout << "Your volley missed\n";
     }
 }
-
 //survival skills
 void Ranger::heal(){
     if(currHealth + 15 > maxHealth){
@@ -30,7 +29,9 @@ void Ranger::heal(){
     currHealth += 15;   
     }
 }
-
 void Ranger::takeDamage(int damage){
 currHealth = currHealth - damage;
+}
+Ranger::~Ranger(){
+
 }
