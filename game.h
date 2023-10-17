@@ -29,6 +29,7 @@ class Game {
   sf::RenderWindow window;
   sf::Text text;
   sf::Text combatText;
+  sf::Text shopText;
   sf::Text playerHealthText;
   sf::Text enemyHealthText;
   sf::Font font;
@@ -41,6 +42,7 @@ class Game {
   sf::View view;
   Enemy* enemyInProximity;
   bool inCombat;
+  bool inShop;
   sf::Sprite combatTextBox;
   bool mapOpen;
   Enemy enemy1;
