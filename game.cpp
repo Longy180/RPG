@@ -8,19 +8,19 @@
 #include <iostream>
 #include <string>
 
+#include "attackBoost.h"
 #include "character.h"
 #include "collision.h"
 #include "enemy.h"
 #include "entity.h"
 #include "fighter.h"
+#include "healthBoost.h"
+#include "healthPotion.h"
 #include "item.h"
 #include "mage.h"
 #include "map.h"
-#include "attackBoost.h"
 #include "player.h"
 #include "ranger.h"
-#include "healthBoost.h"
-#include "healthPotion.h"
 Game::Game()
     : window(sf::VideoMode(700, 500), "Dog Thief", sf::Style::Close),
       player1(
@@ -126,193 +126,202 @@ void Game::chooseClass() {
   playerTurn = true;
 }
 
-void Game::movement(){
-    if (!inCombat) {
-        elapsedTime = clock.getElapsedTime();
-        if (elapsedTime.asSeconds() > 0.1) {
-          // Attempting to move LEFT
-          if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
-              sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            if (mapCollision.willHit(player1) == false) {
-              player1.move_left(12);
-              std::cout << "Left" << std::endl;
-            }
-            if (mapCollision.willHit(player1) == true) {
-              player1.move_right(12);
-              std::cout << "Moving right from collision" << std::endl;
-            }
-            clock.restart();
+void Game::movement() {
+  if (!inCombat) {
+    elapsedTime = clock.getElapsedTime();
+    if (elapsedTime.asSeconds() > 0.1) {
+      // Attempting to move LEFT
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+          sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        if (mapCollision.willHit(player1) == false) {
+          player1.move_left(12);
+          std::cout << "Left" << std::endl;
+        }
+        if (mapCollision.willHit(player1) == true) {
+          player1.move_right(12);
+          std::cout << "Moving right from collision" << std::endl;
+        }
+        clock.restart();
 
-            // Attempting to move RIGHT
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
-                     sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            if (mapCollision.willHit(player1) == false) {
-              player1.move_right(12);
-              std::cout << "Right" << std::endl;
-            }
-            if (mapCollision.willHit(player1) == true) {
-              player1.move_left(12);
-              std::cout << "Moving left from collision" << std::endl;
-            }
-            clock.restart();
+        // Attempting to move RIGHT
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
+                 sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if (mapCollision.willHit(player1) == false) {
+          player1.move_right(12);
+          std::cout << "Right" << std::endl;
+        }
+        if (mapCollision.willHit(player1) == true) {
+          player1.move_left(12);
+          std::cout << "Moving left from collision" << std::endl;
+        }
+        clock.restart();
 
-            // Attempting to move UP
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
-                     sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            if (mapCollision.willHit(player1) == false) {
-              player1.move_up(12);
-              std::cout << "Up" << std::endl;
-            }
-            if (mapCollision.willHit(player1) == true) {
-              player1.move_down(12);
-              std::cout << "Moving down from collision" << std::endl;
-            }
-            clock.restart();
+        // Attempting to move UP
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+                 sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (mapCollision.willHit(player1) == false) {
+          player1.move_up(12);
+          std::cout << "Up" << std::endl;
+        }
+        if (mapCollision.willHit(player1) == true) {
+          player1.move_down(12);
+          std::cout << "Moving down from collision" << std::endl;
+        }
+        clock.restart();
 
-            // Attempting to move DOWN
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
-                     sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            if (mapCollision.willHit(player1) == false) {
-              player1.move_down(12);
-              std::cout << "Down" << std::endl;
-            }
-            if (mapCollision.willHit(player1) == true) {
-              player1.move_up(12);
-              std::cout << "Moving up from collision" << std::endl;
-            }
-            clock.restart();
-          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-        //Shop logic
+        // Attempting to move DOWN
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
+                 sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        if (mapCollision.willHit(player1) == false) {
+          player1.move_down(12);
+          std::cout << "Down" << std::endl;
+        }
+        if (mapCollision.willHit(player1) == true) {
+          player1.move_up(12);
+          std::cout << "Moving up from collision" << std::endl;
+        }
+        clock.restart();
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        // Shop logic
         int purchaseChoice = 0;
         inShop = true;
-        shopText.setString(
-              "Welcome to the shop\n");
+        shopText.setString("Welcome to the shop\n");
         std::cout << "Welcome to the shop\n";
-        while(purchaseChoice != 4){
-        std::cout << "You have: " << player1.get_Gold() << " Gold.\n"
-        << "To purchase a Tough Ring for 10 gold press  1.\n"
-        << "To purchase a Tenacity Ring for 10 gold press 2.\n"
-        << "To purchase a Health Potion for 10 gold press 3.\n"
-        << "To exit the shop press 4.\n";
-        std::cin >> purchaseChoice;
-        if (purchaseChoice == 1){
-          AttackBoost* toughRing = new AttackBoost();
-          if(player1.get_Gold() < toughRing ->get_buyPrice()){
-            std::cout << "You do not have enough gold.\n";
-          }else{
-            player1.addToInventory(toughRing);
-            player1.add_Gold(-10);
-            std::cout << "You received a Tough Ring ! \n";
-            toughRing->itemEffect(&player1);
-            std::cout << "Your damage has increased by 3! \n";
+        while (purchaseChoice != 4) {
+          std::cout << "You have: " << player1.get_Gold() << " Gold.\n"
+                    << "To purchase a Tough Ring for 10 gold press  1.\n"
+                    << "To purchase a Tenacity Ring for 10 gold press 2.\n"
+                    << "To purchase a Health Potion for 10 gold press 3.\n"
+                    << "To exit the shop press 4.\n";
+          std::cin >> purchaseChoice;
+          if (purchaseChoice == 1) {
+            AttackBoost* toughRing = new AttackBoost((std::string) "Tough Ring");
+            if (player1.get_Gold() < toughRing->get_buyPrice()) {
+              std::cout << "You do not have enough gold.\n";
+            } else {
+              player1.addToInventory(toughRing);
+              player1.add_Gold(-10);
+              std::cout << "You received a Tough Ring ! \n";
+              toughRing->itemEffect(&player1);
+              std::cout << "Your damage has increased by 3! \n";
+            }
+          } else if (purchaseChoice == 2) {
+            HealthBoost* tenacityRing = new HealthBoost((std::string) "Tenacity Ring");
+            if (player1.get_Gold() < tenacityRing->get_buyPrice()) {
+              std::cout << "You do not have enough gold.\n";
+            } else {
+              player1.addToInventory(tenacityRing);
+              player1.add_Gold(-10);
+              std::cout << "You received a Tenacity Ring ! \n";
+              tenacityRing->itemEffect(&player1);
+              std::cout << "Your max health has increased by 25! \n";
+            }
+          } else if (purchaseChoice == 3) {
+            HealthPotion* smallPotion = new HealthPotion((std::string) "Health Potion");
+            if (player1.get_Gold() < smallPotion->get_buyPrice()) {
+              std::cout << "You do not have enough gold.\n";
+            } else {
+              player1.addToInventory(smallPotion);
+              player1.add_Gold(-10);
+              std::cout << "You received a Health Potion! \n";
+              std::cout << "Open your inventory to use an item. \n";
+            }
+          } else if (purchaseChoice == 4) {
+            inShop == false;
           }
-        } else if(purchaseChoice == 2){
-          HealthBoost* tenacityRing = new HealthBoost();
-          if(player1.get_Gold() < tenacityRing ->get_buyPrice()){
-            std::cout << "You do not have enough gold.\n";
-          }else{
-            player1.addToInventory(tenacityRing);
-            player1.add_Gold(-10);
-            std::cout << "You received a Tenacity Ring ! \n";
-            tenacityRing->itemEffect(&player1);
-            std::cout << "Your max health has increased by 25! \n";
-          }
-        }else if(purchaseChoice == 3){
-          HealthPotion* smallPotion = new HealthPotion();
-          if(player1.get_Gold() < smallPotion ->get_buyPrice()){
-            std::cout << "You do not have enough gold.\n";
-          }else{
-            player1.addToInventory(smallPotion);
-            player1.add_Gold(-10);
-            std::cout << "You received a Health Potion! \n";
-            std::cout << "Open your inventory to use an item. \n";
-          }
-        }else if (purchaseChoice == 4){
-          inShop == false;
         }
+        clock.restart();
+
+      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+        //Inventory Logic
+        std::cout << "Inventory: \n";
+        int maxSize = player1.get_currInventorySize();
+        for (int i = 0; i < maxSize; i++){
+        std::cout << i << ". " << player1.getInventoryItem(i)->get_name();
         }
         
-        clock.restart();
-          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
-            std::cout << "Inventory: \n";
+      }
+    }
+  }
+}
+
+void Game::combat() {
+  playerTurn = true;
+  bool playerHasChosen = false;
+  playerHealthText.setFont(font);
+  playerHealthText.setCharacterSize(12);
+  playerHealthText.setFillColor(sf::Color::White);
+  playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) +
+                             "/100");
+  playerHealthText.setPosition(player1.get_EntityPosition().x,
+                               player1.get_EntityPosition().y);
+  window.draw(playerHealthText);
+
+  enemyHealthText.setFont(font);
+  enemyHealthText.setCharacterSize(12);
+  enemyHealthText.setFillColor(sf::Color::White);
+  enemyHealthText.setString(
+      "Health: " + std::to_string(enemyInProximity->get_Health()) + "/100");
+  enemyHealthText.setPosition(enemyInProximity->get_EntityPosition().x,
+                              enemyInProximity->get_EntityPosition().y - 20);
+  window.draw(enemyHealthText);
+
+  window.display();
+
+  while (enemyInProximity->get_Health() > 0) {
+    if (playerTurn == true) {
+      playerHasChosen = false;
+
+      sf::Event event;
+      while (window.pollEvent(event) && !playerHasChosen) {
+        if (event.type == sf::Event::TextEntered) {
+          if (event.text.unicode >= '1' && event.text.unicode <= '3') {
+            int moveChosen = event.text.unicode - '0';
+            if (moveChosen == 1) {
+              player1.attack1(enemyInProximity);
+            } else if (moveChosen == 2) {
+              player1.attack2(enemyInProximity);
+            } else if (moveChosen == 3) {
+              player1.heal();
+            }
+            std::cout << "You: \n"
+                      << "Health: " << player1.get_Health() << "/"
+                      << player1.get_maxHealth();
+            std::cout << "\n Enemy: \n"
+                      << "Health: " << enemyInProximity->get_Health() << "/"
+                      << enemyInProximity->get_maxHealth() << "\n";
+            playerTurn = false;
+            playerHasChosen = true;
           }
         }
       }
-}
 
-void Game::combat(){
-    playerTurn = true;
-        bool playerHasChosen = false;
-        playerHealthText.setFont(font);
-            playerHealthText.setCharacterSize(12);
-            playerHealthText.setFillColor(sf::Color::White);
-            playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) + "/100");
-            playerHealthText.setPosition(player1.get_EntityPosition().x, player1.get_EntityPosition().y);
-            window.draw(playerHealthText);
+    } else {
+      // Handle enemy's attack here, if applicable
+      player1.takeDamage(enemyInProximity->get_damage());
+      playerTurn = true;
+      std::cout << "You: \n"
+                << "Health: " << player1.get_Health() << "/"
+                << player1.get_maxHealth();
+      std::cout << "\n Enemy: \n"
+                << "Health: " << enemyInProximity->get_Health() << "/"
+                << enemyInProximity->get_maxHealth() << "\n";
 
-            enemyHealthText.setFont(font);
-            enemyHealthText.setCharacterSize(12);
-            enemyHealthText.setFillColor(sf::Color::White);
-            enemyHealthText.setString("Health: " + std::to_string(enemyInProximity->get_Health()) + "/100");
-            enemyHealthText.setPosition(enemyInProximity->get_EntityPosition().x, enemyInProximity->get_EntityPosition().y - 20);
-            window.draw(enemyHealthText);
+      render();
+      playerHealthText.setString(
+          "Health: " + std::to_string(player1.get_Health()) + "/100");
+      window.draw(playerHealthText);
+      enemyHealthText.setString(
+          "Health: " + std::to_string(enemyInProximity->get_Health()) + "/100");
+      window.draw(enemyHealthText);
+      window.display();
+    }
+  }
 
-            window.display();
-
-        while (enemyInProximity->get_Health() > 0) {
-            
-
-          if (playerTurn == true) {
-            playerHasChosen = false;
-
-            sf::Event event;
-            while (window.pollEvent(event) && !playerHasChosen) {
-              if (event.type == sf::Event::TextEntered) {
-                if (event.text.unicode >= '1' && event.text.unicode <= '3') {
-                  int moveChosen = event.text.unicode - '0';
-                  if (moveChosen == 1) {
-                    player1.attack1(enemyInProximity);
-                  } else if (moveChosen == 2) {
-                    player1.attack2(enemyInProximity);
-                  } else if (moveChosen == 3) {
-                    player1.heal();
-                  }
-                  std::cout << "You: \n"
-                    << "Health: " << player1.get_Health() << "/"
-                    << player1.get_maxHealth();
-                  std::cout << "\n Enemy: \n"
-                    << "Health: " << enemyInProximity->get_Health() << "/"
-                    << enemyInProximity->get_maxHealth() << "\n";
-                  playerTurn = false;
-                  playerHasChosen = true;
-                }
-              }
-            }
-
-          } else {
-            // Handle enemy's attack here, if applicable
-            player1.takeDamage(enemyInProximity->get_damage());
-            playerTurn = true;
-            std::cout << "You: \n"
-                    << "Health: " << player1.get_Health() << "/"
-                    << player1.get_maxHealth();
-            std::cout << "\n Enemy: \n"
-                    << "Health: " << enemyInProximity->get_Health() << "/"
-                    << enemyInProximity->get_maxHealth() << "\n";
-                    
-                    render();
-                    playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) + "/100");
-                    window.draw(playerHealthText);
-                    enemyHealthText.setString("Health: " + std::to_string(enemyInProximity->get_Health()) + "/100");
-                    window.draw(enemyHealthText);
-                    window.display();
-          }
-        }
-
-        enemyInProximity->die();
-        enemyInProximity = nullptr;
-        inCombat = false;
-        player1.add_Gold(15);
+  enemyInProximity->die();
+  enemyInProximity = nullptr;
+  inCombat = false;
+  player1.add_Gold(15);
 }
 
 void Game::handleEvents() {
@@ -353,7 +362,6 @@ void Game::handleEvents() {
         combat();
       }
 
-
       movement();
     }
 
@@ -370,9 +378,8 @@ void Game::handleEvents() {
 
     window.display();
 
-
-    //display player coordinates
-    std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
+    // display player coordinates
+    // std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
   }
 }
 
@@ -412,8 +419,8 @@ void Game::render() {
                            window.getView().getCenter().y + 110);
     window.draw(combatText);
   }
-if(inShop == true){
-sf::Texture combatTexture;
+  if (inShop == true) {
+    sf::Texture combatTexture;
     combatTexture.loadFromFile("images/Textbox.png");
     sf::Sprite combatTextBox(combatTexture);
     combatTextBox.setPosition(
@@ -422,10 +429,7 @@ sf::Texture combatTexture;
     combatTextBox.setScale(0.5, 0.5);
     window.draw(combatTextBox);
     shopText.setPosition(window.getView().getCenter().x - 200,
-                           window.getView().getCenter().y + 110);
+                         window.getView().getCenter().y + 110);
     window.draw(shopText);
+  }
 }
-
-}
-
-
