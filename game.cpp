@@ -41,7 +41,7 @@ Game::Game()
   text.setFont(font);
   text.setCharacterSize(24);
   text.setFillColor(sf::Color::White);
-  text.setString("Choose your class:\n1. Fighter\n2. Mage\n3. Ranger");
+  text.setString("Choose your class:\n1. Fighter\n2. Mage\n3. Ranger\n\n\nControls:\nWASD or arrow keys to move\nE to access shop\nI to access inventory\nM to save\nL to load");
   text.setPosition(20.0f, 20.0f);
 
   combatText.setFont(font);
