@@ -24,7 +24,7 @@ class AnimationTest {
     if (!animation.get_lastMove() == 1) {
       std::cout << "Error in test 1." << std::endl;
     }
-    }
+  }
 
   void testBodyMoveRight(Entity& entityBody) {
     Animation animation;

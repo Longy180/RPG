@@ -26,17 +26,17 @@ void Mage::attack2(Enemy* opponent) {
 
 // meditate
 void Mage::heal() {
-    if (currHealth + 5 > maxHealth) {
-        if (healingCounter <= 4) {
-            currHealth = maxHealth;
-            healingCounter++;
-        }
-    } else {
-        if (healingCounter <= 4) {
-            currHealth += 5;
-            healingCounter++;
-        }
+  if (currHealth + 5 > maxHealth) {
+    if (healingCounter <= 4) {
+      currHealth = maxHealth;
+      healingCounter++;
     }
+  } else {
+    if (healingCounter <= 4) {
+      currHealth += 5;
+      healingCounter++;
+    }
+  }
 }
 
 void Mage::takeDamage(int damage) { currHealth = currHealth - damage; }
