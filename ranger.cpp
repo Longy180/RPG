@@ -22,16 +22,24 @@ void Ranger::attack2(Enemy * opponent){
     }
 }
 //survival skills
-void Ranger::heal(){
-    if(currHealth + 15 > maxHealth){
-        currHealth = maxHealth;
-    }else{
-    currHealth += 15;   
+void Ranger::heal() {
+    if (currHealth + 15 > maxHealth) {
+        if (healingCounter <= 4) {
+            currHealth = maxHealth;
+            healingCounter++;
+        }
+    } else {
+        if (healingCounter <= 4) {
+            currHealth += 15;
+            healingCounter++;
+        }
     }
 }
+
 void Ranger::takeDamage(int damage){
 currHealth = currHealth - damage;
 }
+
 Ranger::~Ranger(){
 
 }

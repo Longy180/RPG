@@ -13,6 +13,8 @@ class Player : public Character {
   Item** inventory;
   int currInventorySize;
   int maxInventorySize;
+  int healingCounter;
+
  public:
   Player(std::string spriteLocation, int positionX, int positionY,
          int maxHealth, int currHealth, int damage, int currGold);
@@ -35,6 +37,8 @@ class Player : public Character {
   void removeFromInventory(int index);
   Item* getInventoryItem(int index);
   void draw(sf::RenderWindow* win);
+  int get_healingCounter();
+  void set_healingCounter(int _healingCounter);
   ~Player();
 };
 

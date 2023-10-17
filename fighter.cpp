@@ -20,13 +20,19 @@ if ((rand()%10 + 1) >= 7){
 };
 
 //recover
-void Fighter::heal(){
-    if(currHealth + 5> maxHealth){
-        currHealth = maxHealth;
-    }else{
-    currHealth += 5;   
+void Fighter::heal() {
+    if (currHealth + 5 > maxHealth) {
+        if (healingCounter <= 4) {
+            currHealth = maxHealth;
+            healingCounter++;
+        }
+    } else {
+        if (healingCounter <= 4) {
+            currHealth += 5;
+            healingCounter++;
+        }
     }
-};
+}
 
 void Fighter::takeDamage(int damage){
 currHealth = currHealth - damage;
