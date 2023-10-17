@@ -35,7 +35,7 @@ sf::Vector2f Entity::get_EntityPosition() { return entitySprite.getPosition(); }
 //Returns entity sprite
 sf::Sprite Entity::get_EntitySprite(){ 
     return entitySprite; 
-
+}
 
 // Sets player sprite
 void Entity::set_entitySprite(std::string spriteLocation, int positionX, int positionY) {
