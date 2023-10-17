@@ -5,11 +5,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+
 #include <sstream>
+#include <fstream>
 #include <iostream>
 #include <string>
-
-
+#include "animation.h"
 #include "attackBoost.h"
 #include "character.h"
 #include "collision.h"
@@ -31,7 +32,8 @@ Game::Game()
       enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5),
       enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50, 5),
       boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 100,
-            100, 8) {
+            100, 8),
+      animation() {
   // Initialize member variables and load resources here
   if (!font.loadFromFile("Fonts/VideoGame_Font.ttf")) {
     std::cout << "error loading font\n";
@@ -45,6 +47,9 @@ Game::Game()
   combatText.setFont(font);
   combatText.setCharacterSize(24);
   combatText.setFillColor(sf::Color::White);
+
+  // Initialise animation
+  Animation animation;
 
   playerClass = 0;
   validChoice = false;
@@ -73,7 +78,9 @@ void Game::chooseClass() {
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
+      if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        std::cout << "FILE SAVED" << std::endl;
+        Game::Load("saveFile", player1, enemy1, enemy2, boss1);
         window.close();
       }
       if (event.type == sf::Event::TextEntered) {
@@ -95,6 +102,7 @@ void Game::chooseClass() {
           std::cout << "You chose Fighter." << std::endl;
           // Create Player
           player1 = Fighter();
+          animation.set_charSelection(1);
           combatText.setString(
               "Your Turn:\n1. Tackle\n2. Takedown\n3. Recover");
           break;
@@ -102,6 +110,7 @@ void Game::chooseClass() {
           std::cout << "You chose Mage." << std::endl;
           // Create Player
           player1 = Mage();
+          animation.set_charSelection(2);
           combatText.setString(
               "Your Turn:\n1. Cast Fireball\n2. Summon Lightning\n3. Meditate");
           break;
@@ -109,6 +118,7 @@ void Game::chooseClass() {
           std::cout << "You chose Ranger." << std::endl;
           // Create Player
           player1 = Ranger();
+          animation.set_charSelection(3);
           combatText.setString(
               "Your Turn:\n1. Stab\n2. Volley\n3. Survival Skills");
           break;
@@ -129,12 +139,18 @@ void Game::chooseClass() {
 void Game::movement() {
   if (!inCombat) {
     elapsedTime = clock.getElapsedTime();
+    if (animation.get_lastMove() == 1) {
+      animation.bodyMoveLeft(player1);
+    } else if (animation.get_lastMove() == 2) {
+      animation.bodyMoveRight(player1);
+    }
     if (elapsedTime.asSeconds() > 0.1) {
       // Attempting to move LEFT
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
           sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         if (mapCollision.willHit(player1) == false) {
           player1.move_left(12);
+          animation.set_lastMove(1);
           std::cout << "Left" << std::endl;
         }
         if (mapCollision.willHit(player1) == true) {
@@ -148,6 +164,7 @@ void Game::movement() {
                  sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if (mapCollision.willHit(player1) == false) {
           player1.move_right(12);
+          animation.set_lastMove(2);
           std::cout << "Right" << std::endl;
         }
         if (mapCollision.willHit(player1) == true) {
@@ -274,6 +291,7 @@ void Game::movement() {
                   "\nYou received a Health Potion! \nOpen your inventory to "
                   "use a potion. \nPress 'E' to Exit the Shop");
             }
+
           }
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) &&
               clock.getElapsedTime().asSeconds() > 0.5) {
@@ -345,13 +363,25 @@ void Game::movement() {
             std::cout << "Health increased by 25\n";
             player1.removeFromInventory(itemSelect - 1);
             std::cout << "Potion was discarded\n";
-        } else {
+          } else {
             std::cout << "This item cannot be used now\n";
+          }
         }
-    }
+        clock.restart();
+
+      }  // To save game state
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+        std::cout << "FILE SAVED" << std::endl;
+        Game::Save("saveFile");
+      }
+      // To load game state
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+        std::cout << "FILE LOADED" << std::endl;
+        Game::Load("saveFile", player1, enemy1, enemy2, boss1);
+      }
     }
   }
-}
+
 }
 
 void Game::combat() {
@@ -362,6 +392,7 @@ void Game::combat() {
   playerHealthText.setFillColor(sf::Color::White);
   playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) +
                              "/" + std::to_string(player1.get_maxHealth()));
+
   playerHealthText.setPosition(player1.get_EntityPosition().x,
                                player1.get_EntityPosition().y);
   window.draw(playerHealthText);
@@ -432,6 +463,72 @@ void Game::combat() {
   enemyInProximity = nullptr;
   inCombat = false;
   player1.add_Gold(15);
+}
+
+
+void Game::Save(std::string fileName) {
+  std::ofstream outFile(fileName);
+
+  // Save player information to save file
+  outFile << player1.get_Health() << std::endl;
+  outFile << player1.get_x() << std::endl;
+  outFile << player1.get_y() << std::endl;
+  outFile << player1.get_Gold() << std::endl;
+  outFile << enemy1.isAlive() << std::endl;
+  outFile << enemy2.isAlive() << std::endl;
+  outFile << boss1.isAlive() << std::endl;
+
+  outFile.close();
+}
+
+void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
+                Enemy& enemy2, Enemy& boss1) {
+  std::ifstream inFile(fileName);
+
+  int new_health;
+  int new_x;
+  int new_y;
+  int new_gold;
+  bool enemy1Alive;
+  bool enemy2Alive;
+  bool boss1Alive;
+  // Save player information to save file
+  // Setting health
+  inFile >> new_health;
+  player1.set_Health(new_health);
+
+  // Checking position
+  inFile >> new_x;
+  inFile >> new_y;
+  player1.set_position(new_x, new_y);
+
+  // Checking gold count
+  inFile >> new_gold;
+  player1.set_gold(new_gold);
+
+  // Checking enemy if alive
+  inFile >> enemy1Alive;
+  if (enemy1Alive == 0) {
+    enemy1.die();
+  } else {
+    enemy1.revive();
+  }
+
+  inFile >> enemy2Alive;
+  if (enemy2Alive == 0) {
+    enemy2.die();
+  } else {
+    enemy2.revive();
+  }
+
+  inFile >> boss1Alive;
+  if (boss1Alive == 0) {
+    boss1.die();
+  } else {
+    boss1.revive();
+  }
+
+  inFile.close();
 }
 
 void Game::handleEvents() {
@@ -539,6 +636,7 @@ void Game::render() {
     text.setPosition(window.getView().getCenter().x - 240,
                      window.getView().getCenter().y + 50);
     window.draw(text);
+
   }
   if (inInventory == true) {
     sf::Texture combatTexture;
@@ -553,5 +651,6 @@ void Game::render() {
     text.setPosition(window.getView().getCenter().x - 240,
                      window.getView().getCenter().y + 50);
     window.draw(text);
+
   }
 }

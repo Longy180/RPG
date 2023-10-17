@@ -30,7 +30,12 @@ class Enemy : public Character {
   bool isAlive();
   // Sets alive boolean to false
   void die();
+  
+  // Sets health to full and sets alive to true, used in load / save
+  void revive();
+
   // Checks if player is within enemy combat range
+
   bool isInProximityToPlayer(int target_x, int target_y, int target_depth);
   // Draws enemy to window
   void draw(sf::RenderWindow* win);

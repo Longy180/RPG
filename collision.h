@@ -18,7 +18,6 @@ class Collision {
  public:
   // Constructor
   Collision();
-  // void removeCollision();
   // Checks if player is about to move into wall
   bool willHit(Entity& player);
   // For debugging collision
