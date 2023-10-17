@@ -181,59 +181,68 @@ void Game::movement() {
 
 
       } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        clock.restart();
         // Shop logic
         inShop = true;
-        text.setCharacterSize(24);
-        text.setString("Items 10 gold each:\n1. Tough Ring\n2. Tenacity Ring\n3. Health Potion");
-        render();
-        window.display();
+        text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nItems 10 gold each:\n1. Tough Ring\n2. Tenacity Ring\n3. Health Potion");
+
         std::cout << "Welcome to the shop\n";
-        while (inShop == true) {
-          std::cout << "You have: " << player1.get_Gold() << " Gold.\n"
+        std::cout << "You have: " << player1.get_Gold() << " Gold.\n"
                     << "To purchase a Tough Ring for 10 gold press  1.\n"
                     << "To purchase a Tenacity Ring for 10 gold press 2.\n"
                     << "To purchase a Health Potion for 10 gold press 3.\n"
                     << "To exit the shop press 4.\n";
-          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+        while (inShop == true) {
+            text.setCharacterSize(24);
+            
+            render();
+            window.display();
+
+          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && clock.getElapsedTime().asSeconds() > 0.2) {
+            clock.restart();
             AttackBoost* toughRing = new AttackBoost();
             if (player1.get_Gold() < toughRing->get_buyPrice()) {
               std::cout << "You do not have enough gold.\n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou do not have enough gold.\nWe don't give out freebies here!\nLeave by pressing 'E'\nCome back when you have gold");
             } else {
               player1.addToInventory(toughRing);
               player1.add_Gold(-10);
               std::cout << "You received a Tough Ring ! \n";
               toughRing->itemEffect(&player1);
               std::cout << "Your damage has increased by 3! \n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou received a Tough Ring ! \nYour damage has increased by 3! \nPress 'E' to Exit the Shop");
             }
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && clock.getElapsedTime().asSeconds() > 0.2) {
+            clock.restart();
             HealthBoost* tenacityRing = new HealthBoost();
             if (player1.get_Gold() < tenacityRing->get_buyPrice()) {
               std::cout << "You do not have enough gold.\n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou do not have enough gold.\nWe don't give out freebies here!\nLeave by pressing 'E'\nCome back when you have gold");
             } else {
               player1.addToInventory(tenacityRing);
               player1.add_Gold(-10);
               std::cout << "You received a Tenacity Ring ! \n";
               tenacityRing->itemEffect(&player1);
               std::cout << "Your max health has increased by 25! \n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou received a Tenacity Ring ! \nMax health has increased by 25! \nPress 'E' to Exit the Shop");
             }
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && clock.getElapsedTime().asSeconds() > 0.2) {
+            clock.restart();
             HealthPotion* smallPotion = new HealthPotion();
             if (player1.get_Gold() < smallPotion->get_buyPrice()) {
               std::cout << "You do not have enough gold.\n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou do not have enough gold.\nWe don't give out freebies here!\nLeave by pressing 'E'\nCome back when you have gold");
             } else {
               player1.addToInventory(smallPotion);
               player1.add_Gold(-10);
               std::cout << "You received a Health Potion! \n";
               std::cout << "Open your inventory to use an item. \n";
+              text.setString("Your Gold: " + std::to_string(player1.get_Gold()) + "\nYou received a Health Potion! \nOpen your inventory to use a potion. \nPress 'E' to Exit the Shop");
             }
-          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
+          } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock.getElapsedTime().asSeconds() > 0.5) {
             inShop = false;
           }
         }
-
-
-
-
         clock.restart();
       } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
         std::cout << "Inventory: \n";
@@ -385,7 +394,7 @@ void Game::handleEvents() {
     window.display();
 
     // display player coordinates
-    std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
+    // std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
   }
 }
 
@@ -432,11 +441,11 @@ void Game::render() {
     sf::Sprite combatTextBox(combatTexture);
     combatTextBox.setPosition(
         view.getCenter().x - combatTextBox.getGlobalBounds().width / 4,
-        view.getCenter().y + 90);
-    combatTextBox.setScale(0.5, 0.5);
+        view.getCenter().y);
+    combatTextBox.setScale(0.5, 0.75);
     window.draw(combatTextBox);
-    text.setPosition(window.getView().getCenter().x - 200,
-                         window.getView().getCenter().y + 120);
+    text.setPosition(window.getView().getCenter().x - 240,
+                         window.getView().getCenter().y + 50);
     window.draw(text);
   }
 }
