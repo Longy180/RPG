@@ -45,6 +45,7 @@ class Game {
   Enemy* enemyInProximity;
   bool inCombat;
   bool inShop;
+  bool inInventory;
   sf::Sprite combatTextBox;
   bool mapOpen;
   Enemy enemy1;
@@ -54,6 +55,8 @@ class Game {
   sf::Sprite background;
   bool playerTurn;
   sf::Texture backgroundTexture;
+  sf::Keyboard::Key keyPressed;
+  int currSize;
   // Declare other member variables here
 
   void handleEvents();
