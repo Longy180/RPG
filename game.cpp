@@ -5,11 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-
-#include <sstream>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
+
 #include "animation.h"
 #include "attackBoost.h"
 #include "character.h"
@@ -30,7 +30,8 @@ Game::Game()
           (std::string) "Sprites/halfling ranger/HalflingRangerIdleSide.gif",
           200, 200, 100, 100, 10, 0),
       enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5),
-      enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 100, 100, 5),
+      enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 100, 100,
+             5),
       boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 125,
             125, 8),
       animation() {
@@ -41,7 +42,10 @@ Game::Game()
   text.setFont(font);
   text.setCharacterSize(24);
   text.setFillColor(sf::Color::White);
-  text.setString("Choose your class:\n1. Fighter\n2. Mage\n3. Ranger\n\n\nControls:\nWASD or arrow keys to move\nE to access shop\nI to access inventory\nM to save\nL to load");
+  text.setString(
+      "Choose your class:\n1. Fighter\n2. Mage\n3. Ranger\n\n\nControls:\nWASD "
+      "or arrow keys to move\nE to access shop\nI to access inventory\nM to "
+      "save\nL to load");
   text.setPosition(20.0f, 20.0f);
 
   combatText.setFont(font);
@@ -75,13 +79,14 @@ void Game::runGame() {
   }
 }
 
-void Game::winLoseWindow(){
+void Game::winLoseWindow() {
   text.setCharacterSize(24);
-  text.setPosition(window.getView().getCenter().x - 100, window.getView().getCenter().y - 50);
-    
-  if (player1.get_Health() <= 0){
+  text.setPosition(window.getView().getCenter().x - 100,
+                   window.getView().getCenter().y - 50);
+
+  if (player1.get_Health() <= 0) {
     text.setString("Game Over\nRan Out of Health");
-  } else if (boss1.get_Health() <= 0){
+  } else if (boss1.get_Health() <= 0) {
     text.setString("You Win\n");
   }
   window.clear();
@@ -314,7 +319,6 @@ void Game::movement() {
                   "\nYou received a Health Potion! \nOpen your inventory to "
                   "use a potion. \nPress 'E' to Exit the Shop");
             }
-
           }
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) &&
               clock.getElapsedTime().asSeconds() > 0.5) {
@@ -325,63 +329,68 @@ void Game::movement() {
 
         // Inventory
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && clock.getElapsedTime().asSeconds() > 0.5) {
-    clock.restart();
-    inInventory = true;
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) &&
+          clock.getElapsedTime().asSeconds() > 0.5) {
+        clock.restart();
+        inInventory = true;
 
-    std::stringstream ss;
-    ss << "Use number keys to select an item to use\nInventory: \n";
+        std::stringstream ss;
+        ss << "Use number keys to select an item to use\nInventory: \n";
 
-    currSize = player1.get_currInventorySize();
+        currSize = player1.get_currInventorySize();
 
-    if (currSize <= 0) {
-        std::cout << "Inventory is empty\n";
-        text.setString("Inventory: \nInventory is empty\n");
-    } else {
-        for (int i = 0; i < currSize; i++) {
-            ss << (i + 1) << ". " << player1.getInventoryItem(i)->get_name() << "\n";
+        if (currSize <= 0) {
+          std::cout << "Inventory is empty\n";
+          text.setString("Inventory: \nInventory is empty\n");
+        } else {
+          for (int i = 0; i < currSize; i++) {
+            ss << (i + 1) << ". " << player1.getInventoryItem(i)->get_name()
+               << "\n";
+          }
+          text.setString(ss.str());
         }
-        text.setString(ss.str());
-    }
 
-    render();
-    window.display();
+        render();
+        window.display();
 
-    sf::Event event1;
-    bool playerHasChosen = false;
-    int itemSelect = 0;
+        sf::Event event1;
+        bool playerHasChosen = false;
+        int itemSelect = 0;
 
-    while (inInventory && !playerHasChosen) {
-    while (window.pollEvent(event1)) {
-        if (event1.type == sf::Event::TextEntered) {
-            if (event1.text.unicode >= '1' && event1.text.unicode <= '4') {
+        while (inInventory && !playerHasChosen) {
+          while (window.pollEvent(event1)) {
+            if (event1.type == sf::Event::TextEntered) {
+              if (event1.text.unicode >= '1' && event1.text.unicode <= '4') {
                 itemSelect = event1.text.unicode - '0';
                 playerHasChosen = true;
+              }
             }
+          }
+
+          // Check for key presses for item selection
+          for (int i = sf::Keyboard::Num1; i <= sf::Keyboard::Num4; ++i) {
+            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(i))) {
+              itemSelect = i - sf::Keyboard::Num1 + 1;
+              playerHasChosen = true;
+              break;
+            }
+          }
+
+          if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) &&
+              clock.getElapsedTime().asSeconds() > 0.5) {
+            inInventory = false;
+          }
+          sf::sleep(sf::milliseconds(
+              100));  // Add a small delay to prevent excessive loop iterations.
         }
-    }
 
-    // Check for key presses for item selection
-    for (int i = sf::Keyboard::Num1; i <= sf::Keyboard::Num4; ++i) {
-        if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(i))) {
-            itemSelect = i - sf::Keyboard::Num1 + 1;
-            playerHasChosen = true;
-            break;
-        }
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && clock.getElapsedTime().asSeconds() > 0.5) {
-        inInventory = false;
-    }
-    sf::sleep(sf::milliseconds(100)); // Add a small delay to prevent excessive loop iterations.
-}
-
-    if (playerHasChosen && itemSelect <= currSize) {
-        if (player1.getInventoryItem(itemSelect - 1)->get_name() == "Health Potion") {
+        if (playerHasChosen && itemSelect <= currSize) {
+          if (player1.getInventoryItem(itemSelect - 1)->get_name() ==
+              "Health Potion") {
             if (player1.get_Health() + 25 > player1.get_maxHealth()) {
-                player1.set_Health(player1.get_maxHealth());
+              player1.set_Health(player1.get_maxHealth());
             } else {
-                player1.set_Health(player1.get_Health() + 25);
+              player1.set_Health(player1.get_Health() + 25);
             }
             std::cout << "Health increased by 25\n";
             player1.removeFromInventory(itemSelect - 1);
@@ -404,7 +413,6 @@ void Game::movement() {
       }
     }
   }
-
 }
 
 void Game::combat() {
@@ -481,14 +489,13 @@ void Game::combat() {
       window.display();
     }
   }
-if (enemyInProximity->get_Health() <= 0){
-  enemyInProximity->die();
-  enemyInProximity = nullptr;
-  player1.add_Gold(15);
-} 
-inCombat = false;
+  if (enemyInProximity->get_Health() <= 0) {
+    enemyInProximity->die();
+    enemyInProximity = nullptr;
+    player1.add_Gold(15);
+  }
+  inCombat = false;
 }
-
 
 void Game::Save(std::string fileName) {
   std::ofstream outFile(fileName);
@@ -563,7 +570,8 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
 void Game::handleEvents() {
   // Handle game events here
   // Game loop
-  while (window.isOpen() && player1.get_Health() > 0 && boss1.get_Health() > 0) {
+  while (window.isOpen() && player1.get_Health() > 0 &&
+         boss1.get_Health() > 0) {
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
@@ -598,26 +606,25 @@ void Game::handleEvents() {
       } else {
         // Handle combat logic here
         combat();
-
       }
-if (player1.get_Health() > 0){
-      movement();
-}
+      if (player1.get_Health() > 0) {
+        movement();
+      }
     }
-if (player1.get_Health() > 0){
-    // Update the view to follow the player
-    view.setCenter(player1.get_EntityPosition());
+    if (player1.get_Health() > 0) {
+      // Update the view to follow the player
+      view.setCenter(player1.get_EntityPosition());
 
-    // Set the view's size to control the area visible on the screen
-    view.setSize(sf::Vector2f(800, 450));
+      // Set the view's size to control the area visible on the screen
+      view.setSize(sf::Vector2f(800, 450));
 
-    // Apply the view to the window
-    window.setView(view);
-    // Create chest entity
-    render();
+      // Apply the view to the window
+      window.setView(view);
+      // Create chest entity
+      render();
 
-    window.display();
-  }
+      window.display();
+    }
   }
 }
 
@@ -670,7 +677,6 @@ void Game::render() {
     text.setPosition(window.getView().getCenter().x - 240,
                      window.getView().getCenter().y + 50);
     window.draw(text);
-
   }
   if (inInventory == true) {
     sf::Texture combatTexture;
@@ -685,6 +691,5 @@ void Game::render() {
     text.setPosition(window.getView().getCenter().x - 240,
                      window.getView().getCenter().y + 50);
     window.draw(text);
-
   }
 }

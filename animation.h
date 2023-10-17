@@ -20,14 +20,13 @@ class Animation {
   int lastMove;
 
  public:
- Animation();
+  Animation();
   void bodyMoveLeft(Entity& entityBody);
   void bodyMoveRight(Entity& entityBody);
   int get_lastMove();
   void set_lastMove(int oneTwo);
   int get_charSelection();
   void set_charSelection(int _selection);
-
 };
 
 #endif

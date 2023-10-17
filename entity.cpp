@@ -32,13 +32,12 @@ void Entity::set_position(int _x, int _y) { entitySprite.setPosition(_x, _y); }
 // Returns the position of the entity
 sf::Vector2f Entity::get_EntityPosition() { return entitySprite.getPosition(); }
 
-//Returns entity sprite
-sf::Sprite Entity::get_EntitySprite(){ 
-    return entitySprite; 
-}
+// Returns entity sprite
+sf::Sprite Entity::get_EntitySprite() { return entitySprite; }
 
 // Sets player sprite
-void Entity::set_entitySprite(std::string spriteLocation, int positionX, int positionY) {
+void Entity::set_entitySprite(std::string spriteLocation, int positionX,
+                              int positionY) {
   if (!entityBody->loadFromFile(spriteLocation)) {
     std::cout << "Error loading player model." << std::endl;
   }

@@ -30,7 +30,7 @@ class Enemy : public Character {
   bool isAlive();
   // Sets alive boolean to false
   void die();
-  
+
   // Sets health to full and sets alive to true, used in load / save
   void revive();
 
