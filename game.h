@@ -19,7 +19,14 @@
 #include "map.h"
 #include "player.h"
 #include "ranger.h"
-
+#include "animationTest.h"
+#include "attackBoostTest.h"
+#include "collisionTest.h"
+#include "fighterTest.h"
+#include "healthBoostTest.h"
+#include "healthPotionTest.h"
+#include "mageTest.h"
+#include "rangerTest.h"
 class Game {
  public:
   Game();          // Constructor
