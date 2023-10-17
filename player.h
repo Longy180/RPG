@@ -28,6 +28,7 @@ class Player : public Character {
   int get_Gold();
   void set_gold(int _gold);
   int get_currInventorySize();
+  void set_currInventorySize(int _size);
   void add_Gold(int gold);
   virtual void attack1(Enemy* opponent);
   virtual void attack2(Enemy* opponent);
