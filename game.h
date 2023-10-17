@@ -60,6 +60,7 @@ class Game {
   // Declare other member variables here
 
   void handleEvents();
+  void winLoseWindow();
   void update();
   void render();
   void chooseClass();
