@@ -82,7 +82,6 @@ Collision::Collision() {
   rectangles[33].setPosition(450, 500);
   rectangles[34].setSize(sf::Vector2f(70, 50));
   rectangles[34].setPosition(1184, 450);
-
 }
 
 // This is for debugging to show where the hitboxes are
@@ -92,10 +91,11 @@ void Collision::drawRectangles(sf::RenderWindow& window) {
   }
 }
 
+// Checks if player is about to move into wall
 bool Collision::willHit(Entity& player) {
   sf::FloatRect playerBounds = player.get_EntitySprite().getGlobalBounds();
 
-for (int i = 0; i < 35; i++) {
+  for (int i = 0; i < 35; i++) {
     if (playerBounds.intersects(rectangles[i].getGlobalBounds())) {
       // There's a collision
       std::cout << "collision" << std::endl;

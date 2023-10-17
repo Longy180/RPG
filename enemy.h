@@ -6,8 +6,8 @@
 #include <cmath>
 #include <random>
 
+#include "character.h"
 #include "entity.h"
-#include"character.h"
 
 class Enemy : public Character {
  private:
@@ -16,18 +16,25 @@ class Enemy : public Character {
   int _depth;
 
  public:
-  Enemy(std::string spriteLocation, int positionX, int positionY, int maxHealth, int currHealth, int damage);
+  // Constructor
+  Enemy(std::string spriteLocation, int positionX, int positionY, int maxHealth,
+        int currHealth, int damage);
 
+  // Returns enemy's x coordinate
   int get_x();
+  // Returns enemy's y coordinate
   int get_y();
+  // Returns hitbox depth of enemy
   int get_depth();
+  // Returns true if enemy is alive
   bool isAlive();
+  // Sets alive boolean to false
   void die();
-
+  // Checks if player is within enemy combat range
   bool isInProximityToPlayer(int target_x, int target_y, int target_depth);
-
+  // Draws enemy to window
   void draw(sf::RenderWindow* win);
-
+  // Deconstructor
   ~Enemy();
 };
 

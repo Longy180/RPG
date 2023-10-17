@@ -32,7 +32,7 @@ sf::Vector2f Entity::get_EntityPosition(){
   return entitySprite.getPosition();
 }
 
-//Returns player sprite
+//Returns entity sprite
 sf::Sprite Entity::get_EntitySprite(){ 
     return entitySprite; 
 }
