@@ -43,10 +43,6 @@ Game::Game()
   combatText.setCharacterSize(24);
   combatText.setFillColor(sf::Color::White);
 
-  shopText.setFont(font);
-  shopText.setCharacterSize(24);
-  shopText.setFillColor(sf::Color::White);
-
   playerClass = 0;
   validChoice = false;
   inCombat = false;
@@ -125,7 +121,6 @@ void Game::chooseClass() {
   playerTurn = true;
 }
 
-<<<<<<< HEAD
 void Game::movement(){
     if (!inCombat) {
         elapsedTime = clock.getElapsedTime();
@@ -230,28 +225,8 @@ void Game::movement(){
         }else if (purchaseChoice == 4){
           inShop == false;
         }
-=======
-void Game::movement() {
-  if (!inCombat) {
-    elapsedTime = clock.getElapsedTime();
-    if (elapsedTime.asSeconds() > 0.1) {
-      // Attempting to move LEFT
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
-          sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if (mapCollision.willHit(player1) == false) {
-          player1.move_left(12);
-          std::cout << "Left" << std::endl;
-        }
-        if (mapCollision.willHit(player1) == true) {
-          player1.move_right(12);
-          std::cout << "Moving right from collision" << std::endl;
->>>>>>> 93bee04dd640b7cf53a7b6a602fccfa41fcf71a4
         }
         clock.restart();
-<<<<<<< HEAD
-          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
-            std::cout << "Inventory: \n";
-=======
 
         // Attempting to move RIGHT
       } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
@@ -298,7 +273,8 @@ void Game::movement() {
       } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
         // Shop logic
         inShop = true;
-        shopText.setString("Welcome to the shop\n");
+        text.setCharacterSize(24);
+        text.setString("Items 10 gold each:\n1. Tough Ring\n2. Tenacity Ring\n3. Health Potion");
         render();
         window.display();
         std::cout << "Welcome to the shop\n";
@@ -408,7 +384,6 @@ void Game::combat() {
                       << enemyInProximity->get_maxHealth() << "\n";
             playerTurn = false;
             playerHasChosen = true;
->>>>>>> 93bee04dd640b7cf53a7b6a602fccfa41fcf71a4
           }
         }
       }
@@ -524,7 +499,7 @@ void Game::render() {
     boss1.draw(&window);
   }
   player1.draw(&window);
-  mapCollision.drawRectangles(window);
+//   mapCollision.drawRectangles(window);
 
   // Combat ui
   if (inCombat) {
@@ -540,14 +515,9 @@ void Game::render() {
                            window.getView().getCenter().y + 110);
     window.draw(combatText);
   }
-<<<<<<< HEAD
-if(inShop == true){
-sf::Texture combatTexture;
-=======
   //shop ui
   if (inShop == true) {
     sf::Texture combatTexture;
->>>>>>> 93bee04dd640b7cf53a7b6a602fccfa41fcf71a4
     combatTexture.loadFromFile("images/Textbox.png");
     sf::Sprite combatTextBox(combatTexture);
     combatTextBox.setPosition(
@@ -556,17 +526,10 @@ sf::Texture combatTexture;
     combatTextBox.setScale(0.5, 0.5);
     window.draw(combatTextBox);
     shopText.setPosition(window.getView().getCenter().x - 200,
-<<<<<<< HEAD
                            window.getView().getCenter().y + 110);
     window.draw(shopText);
 }
 
 }
-
-
-=======
-                         window.getView().getCenter().y + 110);
-    window.draw(shopText);
   }
 }
->>>>>>> 93bee04dd640b7cf53a7b6a602fccfa41fcf71a4
