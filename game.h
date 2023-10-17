@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 
+#include "animation.h"
 #include "character.h"
 #include "collision.h"
 #include "enemy.h"
@@ -34,6 +35,7 @@ class Game {
   sf::Text enemyHealthText;
   sf::Font font;
   Player player1;
+  Animation animation;
   int playerClass;
   bool validChoice;
   int moveChosen;
@@ -60,6 +62,9 @@ class Game {
   void chooseClass();
   void combat();
   void movement();
+  void Save(std::string fileName);
+  void Load(std::string fileName, Player& player1, Enemy& enemy1, Enemy& enemy2,
+            Enemy& boss1);
   // Add other private member functions here
 };
 
