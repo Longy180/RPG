@@ -1,4 +1,4 @@
-output: item.o attackBoost.o healthBoost.o healthPotion.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o animation.o main.o 
+output: item.o attackBoost.o healthBoost.o healthPotion.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o animation.o main.o
 	g++  item.o attackBoost.o healthBoost.o healthPotion.o entity.o character.o player.o ranger.o mage.o fighter.o enemy.o map.o collision.o game.o animation.o main.o -std=c++11 -lsfml-graphics -lsfml-window -lsfml-system -o run -Wall
 
 entity.o: entity.cpp

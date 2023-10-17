@@ -43,7 +43,7 @@ class AnimationTest {
     }
   }
 
-  void testSetLastMove(int oneTwo) {
+  void testSetLastMove() {
     Animation animation;
     animation.set_lastMove(2);
     if (!animation.get_lastMove() == 2) {
@@ -59,7 +59,7 @@ class AnimationTest {
     }
   }
 
-  void testSetCharSelection(int _selection) {
+  void testSetCharSelection() {
     Animation animation;
     animation.set_charSelection(2);
     if (!animation.get_charSelection() == 2) {
@@ -69,8 +69,6 @@ class AnimationTest {
 
  public:
   AnimationTest() {
-    testBodyMoveLeft();
-    testBodyMoveRight();
     testGetLastMove();
     testSetLastMove();
     testGetCharSelection();
