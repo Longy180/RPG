@@ -29,10 +29,13 @@ int Entity::get_y() { return entitySprite.getPosition().y; }
 // sets positions of player
 void Entity::set_position(int _x, int _y) { entitySprite.setPosition(_x, _y); }
 
+// Returns the position of the entity
 sf::Vector2f Entity::get_EntityPosition() { return entitySprite.getPosition(); }
 
-// Returns player sprite
-sf::Sprite Entity::get_EntitySprite() { return entitySprite; }
+//Returns entity sprite
+sf::Sprite Entity::get_EntitySprite(){ 
+    return entitySprite; 
+
 
 // Sets player sprite
 void Entity::set_entitySprite(std::string spriteLocation, int positionX, int positionY) {
