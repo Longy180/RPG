@@ -28,8 +28,7 @@ Game::Game()
           200, 200, 100, 100, 10, 0),
       enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5),
       enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50, 5),
-      boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 100,
-            100, 8) {
+      boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 100, 100, 8) {
   // Initialize member variables and load resources here
   if (!font.loadFromFile("Fonts/VideoGame_Font.ttf")) {
     std::cout << "error loading font\n";
@@ -43,10 +42,6 @@ Game::Game()
   combatText.setFont(font);
   combatText.setCharacterSize(24);
   combatText.setFillColor(sf::Color::White);
-
-  shopText.setFont(font);
-  shopText.setCharacterSize(24);
-  shopText.setFillColor(sf::Color::White);
 
   playerClass = 0;
   validChoice = false;
@@ -62,7 +57,7 @@ Game::Game()
 }
 
 void Game::runGame() {
-  // Game loop (handleEvents, update, render)
+  // Game loop
   while (window.isOpen()) {
     chooseClass();
     handleEvents();
@@ -230,32 +225,24 @@ void Game::movement() {
             inShop == false;
           }
         }
-        clock.restart();
-
-      } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
-        //Inventory Logic
-        std::cout << "Inventory: \n";
-        int maxSize = player1.get_currInventorySize();
-        for (int i = 0; i < maxSize; i++){
-        std::cout << i << ". " << player1.getInventoryItem(i)->get_name();
-        }
         
+        clock.restart();
+          }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+            std::cout << "Inventory: \n";
+          }
+        }
       }
-    }
-  }
 }
 
-void Game::combat() {
-  playerTurn = true;
-  bool playerHasChosen = false;
-  playerHealthText.setFont(font);
-  playerHealthText.setCharacterSize(12);
-  playerHealthText.setFillColor(sf::Color::White);
-  playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) +
-                             "/100");
-  playerHealthText.setPosition(player1.get_EntityPosition().x,
-                               player1.get_EntityPosition().y);
-  window.draw(playerHealthText);
+void Game::combat(){
+    playerTurn = true;
+        bool playerHasChosen = false;
+        playerHealthText.setFont(font);
+            playerHealthText.setCharacterSize(12);
+            playerHealthText.setFillColor(sf::Color::White);
+            playerHealthText.setString("Health: " + std::to_string(player1.get_Health()) + "/100");
+            playerHealthText.setPosition(player1.get_EntityPosition().x, player1.get_EntityPosition().y);
+            window.draw(playerHealthText);
 
   enemyHealthText.setFont(font);
   enemyHealthText.setCharacterSize(12);
@@ -324,6 +311,10 @@ void Game::combat() {
   player1.add_Gold(15);
 }
 
+
+
+
+
 void Game::handleEvents() {
   // Handle game events here
   // Game loop
@@ -378,8 +369,9 @@ void Game::handleEvents() {
 
     window.display();
 
-    // display player coordinates
-    // std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
+
+    //display player coordinates
+    std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
   }
 }
 
@@ -403,7 +395,7 @@ void Game::render() {
     boss1.draw(&window);
   }
   player1.draw(&window);
-  mapCollision.drawRectangles(window);
+//   mapCollision.drawRectangles(window);
 
   // Combat ui
   if (inCombat) {
@@ -419,8 +411,8 @@ void Game::render() {
                            window.getView().getCenter().y + 110);
     window.draw(combatText);
   }
-  if (inShop == true) {
-    sf::Texture combatTexture;
+if(inShop == true){
+sf::Texture combatTexture;
     combatTexture.loadFromFile("images/Textbox.png");
     sf::Sprite combatTextBox(combatTexture);
     combatTextBox.setPosition(
@@ -433,3 +425,5 @@ void Game::render() {
     window.draw(shopText);
   }
 }
+
+

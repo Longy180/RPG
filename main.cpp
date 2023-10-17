@@ -5,4 +5,3 @@ int main() {
   game.runGame();
   return 0;
 }
-
