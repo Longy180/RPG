@@ -71,6 +71,29 @@ void Game::runGame() {
   while (window.isOpen()) {
     chooseClass();
     handleEvents();
+    winLoseWindow();
+  }
+}
+
+void Game::winLoseWindow(){
+  text.setCharacterSize(24);
+  text.setPosition(window.getView().getCenter().x - 100, window.getView().getCenter().y - 50);
+    
+  if (player1.get_Health() <= 0){
+    text.setString("Game Over\nRan Out of Health");
+  } else if (boss1.get_Health() <= 0){
+    text.setString("You Win\n");
+  }
+  window.clear();
+  window.draw(text);
+  window.display();
+  sf::Event event;
+  while (window.isOpen()) {
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      }
+    }
   }
 }
 
@@ -78,7 +101,7 @@ void Game::chooseClass() {
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+      if (event.type == sf::Event::Closed) {
         std::cout << "FILE SAVED" << std::endl;
         Game::Load("saveFile", player1, enemy1, enemy2, boss1);
         window.close();
@@ -409,7 +432,7 @@ void Game::combat() {
 
   window.display();
 
-  while (enemyInProximity->get_Health() > 0) {
+  while (enemyInProximity->get_Health() > 0 && player1.get_Health() > 0) {
     if (playerTurn == true) {
       playerHasChosen = false;
 
@@ -458,11 +481,12 @@ void Game::combat() {
       window.display();
     }
   }
-
+if (enemyInProximity->get_Health() <= 0){
   enemyInProximity->die();
   enemyInProximity = nullptr;
-  inCombat = false;
   player1.add_Gold(15);
+} 
+inCombat = false;
 }
 
 
@@ -534,10 +558,12 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
 void Game::handleEvents() {
   // Handle game events here
   // Game loop
-  while (window.isOpen()) {
+  while (window.isOpen() && player1.get_Health() > 0 && boss1.get_Health() > 0) {
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
+        std::cout << "FILE SAVED" << std::endl;
+        Game::Load("saveFile", player1, enemy1, enemy2, boss1);
         window.close();
       }
       // Combat check and handling
@@ -567,11 +593,13 @@ void Game::handleEvents() {
       } else {
         // Handle combat logic here
         combat();
+
       }
-
+if (player1.get_Health() > 0){
       movement();
+}
     }
-
+if (player1.get_Health() > 0){
     // Update the view to follow the player
     view.setCenter(player1.get_EntityPosition());
 
@@ -584,6 +612,7 @@ void Game::handleEvents() {
     render();
 
     window.display();
+  }
   }
 }
 
