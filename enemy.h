@@ -23,6 +23,7 @@ class Enemy : public Character {
   int get_depth();
   bool isAlive();
   void die();
+  void revive();
 
   bool isInProximityToPlayer(int target_x, int target_y, int target_depth);
 

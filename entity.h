@@ -12,8 +12,10 @@ class Entity {
   Entity();
   Entity(std::string spriteLocation, int positionX, int positionY);
   int get_x();
+  void set_position(int _x, int _y);
   int get_y();
   sf::Sprite get_EntitySprite();
+  void set_entitySprite(std::string spriteLocation, int positionX, int positionY);
   sf::Vector2f get_EntityPosition();
   virtual void draw(sf::RenderWindow* win) = 0;
   ~Entity();

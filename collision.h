@@ -11,7 +11,7 @@
 #include "player.h"
 
 class Collision {
-  private:
+  protected:
     sf::RectangleShape rectangles[35];
 
   public:

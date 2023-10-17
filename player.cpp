@@ -18,6 +18,10 @@ Player::Player(std::string spriteLocation, int positionX, int positionY,
   
 }
 
+void Player::set_gold(int _gold){
+  currGold = _gold;
+}
+
 // draws player sprite to game window
 void Player::draw(sf::RenderWindow* win) { win->draw(entitySprite); }
 

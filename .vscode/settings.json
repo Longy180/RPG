@@ -72,6 +72,7 @@
         "functional": "cpp",
         "memory_resource": "cpp",
         "utility": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "fstream": "cpp"
     }
 }
