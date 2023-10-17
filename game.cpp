@@ -506,6 +506,9 @@ void Game::Save(std::string fileName) {
   outFile << player1.get_y() << std::endl;
   outFile << player1.get_Gold() << std::endl;
   outFile << player1.get_healingCounter() << std::endl;
+  for (int i = 0; i < player1.get_currInventorySize(); i++) {
+    outFile << player1.getInventoryItem(i) << std::endl;
+  }
   outFile << enemy1.isAlive() << std::endl;
   outFile << enemy2.isAlive() << std::endl;
   outFile << boss1.isAlive() << std::endl;
@@ -525,6 +528,7 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
   bool enemy1Alive;
   bool enemy2Alive;
   bool boss1Alive;
+  int location;
   // Save player information to save file
   // Setting health
   inFile >> new_health;
@@ -541,6 +545,12 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
 
   inFile >> new_healingCounter;
   player1.set_healingCounter(new_healingCounter);
+
+  inFile >> location;
+if (location >= 0 && location < player1.get_currInventorySize()) {
+    Item* newItem = new Item(location);  // Assuming you have a constructor that takes an item ID
+    player1.addToInventory(newItem);
+}
 
   // Checking enemy if alive
   inFile >> enemy1Alive;

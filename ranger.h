@@ -10,8 +10,8 @@ public:
 Ranger();
 void attack1(Enemy * opponent);
 void attack2(Enemy * opponent);
-void heal(); 
-void takeDamage(int damage);
+virtual void heal(); 
+virtual void takeDamage(int damage);
 ~Ranger();
 };
 #endif
