@@ -88,8 +88,9 @@ void Player::removeFromInventory(int index){
 Item* Player::getInventoryItem(int index) {
   if (index >= 0 && index < currInventorySize) {
     return inventory[index];
+  } else {
+    return nullptr;
   }
-  return nullptr;
 }
 
 // Virtual functions
