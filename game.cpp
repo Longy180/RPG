@@ -43,10 +43,6 @@ Game::Game()
   combatText.setCharacterSize(24);
   combatText.setFillColor(sf::Color::White);
 
-  shopText.setFont(font);
-  shopText.setCharacterSize(24);
-  shopText.setFillColor(sf::Color::White);
-
   playerClass = 0;
   validChoice = false;
   inCombat = false;
@@ -187,7 +183,8 @@ void Game::movement() {
       } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
         // Shop logic
         inShop = true;
-        shopText.setString("Welcome to the shop\n");
+        text.setCharacterSize(24);
+        text.setString("Items 10 gold each:\n1. Tough Ring\n2. Tenacity Ring\n3. Health Potion");
         render();
         window.display();
         std::cout << "Welcome to the shop\n";
@@ -412,7 +409,7 @@ void Game::render() {
     boss1.draw(&window);
   }
   player1.draw(&window);
-  mapCollision.drawRectangles(window);
+//   mapCollision.drawRectangles(window);
 
   // Combat ui
   if (inCombat) {
@@ -438,8 +435,8 @@ void Game::render() {
         view.getCenter().y + 90);
     combatTextBox.setScale(0.5, 0.5);
     window.draw(combatTextBox);
-    shopText.setPosition(window.getView().getCenter().x - 200,
-                         window.getView().getCenter().y + 110);
-    window.draw(shopText);
+    text.setPosition(window.getView().getCenter().x - 200,
+                         window.getView().getCenter().y + 120);
+    window.draw(text);
   }
 }
