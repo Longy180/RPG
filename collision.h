@@ -11,14 +11,18 @@
 #include "player.h"
 
 class Collision {
-  private:
-    sf::RectangleShape rectangles[35];
+ private:
+  // Array of collision rectangles
+  sf::RectangleShape rectangles[35];
 
-  public:
-    Collision();
-    // void removeCollision();
-    bool willHit(Entity& player);
-    void drawRectangles(sf::RenderWindow& window);
+ public:
+  // Constructor
+  Collision();
+  // void removeCollision();
+  // Checks if player is about to move into wall
+  bool willHit(Entity& player);
+  // For debugging collision
+  void drawRectangles(sf::RenderWindow& window);
 };
 
 #endif
