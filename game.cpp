@@ -5,8 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <sstream>
 #include <iostream>
 #include <string>
+
 
 #include "attackBoost.h"
 #include "character.h"
@@ -282,104 +284,71 @@ void Game::movement() {
 
         // Inventory
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) &&
-          clock.getElapsedTime().asSeconds() > 0.5) {
-        clock.restart();
-        inInventory = true;
-        bool playerHasChosen = false;
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && clock.getElapsedTime().asSeconds() > 0.5) {
+    clock.restart();
+    inInventory = true;
 
-        text.setString("Inventory: \n");
-        text.setCharacterSize(24);
+    std::stringstream ss;
+    ss << "Use number keys to select an item to use\nInventory: \n";
 
-        std::cout << "Inventory: \n";
-        currSize = player1.get_currInventorySize();
-        if (currSize <= 0) {
-          std::cout << "Inventory is empty\n";
-          text.setString("Inventory: \nInventory is empty\n");
-          render();
-          window.display();
-          while (inInventory == true) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) &&
-                clock.getElapsedTime().asSeconds() > 0.5) {
-              inInventory = false;
-            }
-          }
-        } else {
-          std::cout << "ENTER ELSE\n";
-          // for (int i = 0; i < currSize; i++) {
-          //   std::cout << "ENTER FOR\n" + std::to_string(currSize) + "\n";
-          //   std::cout << i + 1 << ". "
-          //             << player1.getInventoryItem(i)->get_name() << "\n";
-          // }
-          std::cout << "EXIT FOR\n";
-          int itemSelect = 0;
-          std::cout << "Select which item you would like to use";
-          // if (player1.get_currInventorySize() == 1) {
-          //   text.setString(
-          //       "Use number keys to select an item to use\nInventory: \n1. "
-          //       + player1.getInventoryItem(0)->get_name() + "\n");
-          // } else if (player1.get_currInventorySize() == 2) {
-          //   text.setString(
-          //       "Use number keys to select an item to use\nInventory: \n1. "
-          //       + player1.getInventoryItem(0)->get_name() + "\n2. " +
-          //       player1.getInventoryItem(1)->get_name() + "\n");
-          // } else if (player1.get_currInventorySize() == 3) {
-          //   text.setString(
-          //       "Use number keys to select an item to use\nInventory: \n1. "
-          //       + player1.getInventoryItem(0)->get_name() + "\n2. " +
-          //       player1.getInventoryItem(1)->get_name() + "\n3. " +
-          //       player1.getInventoryItem(2)->get_name() + "\n");
-          // } else if (player1.get_currInventorySize() == 4) {
-          //   text.setString(
-          //       "Use number keys to select an item to use\nInventory: \n1. "
-          //       + player1.getInventoryItem(0)->get_name() + "\n2. " +
-          //       player1.getInventoryItem(1)->get_name() + "\n3. " +
-          //       player1.getInventoryItem(2)->get_name() + "\n4. " +
-          //       player1.getInventoryItem(3)->get_name() + "\n");
-          // }
-          std::cout << "\nbeforre Render\n";
-          render();
-          window.display();
-          std::cout << "After Render\n";
-            sf::Event event1;
-          while (inInventory == true) {
-            if (clock.getElapsedTime().asSeconds() > 0.5){
-            while (window.pollEvent(event1) && !playerHasChosen) {
-              std::cout << "After While\n";
-              if (event1.type == sf::Event::TextEntered) {
-                std::cout << "After If1\n";
-                if (event1.text.unicode >= '1' && event1.text.unicode <= '4') {
-                  std::cout << "After If2\n";
-                  itemSelect = event1.text.unicode - '0';
-                  playerHasChosen = true;
-                }
-              }
-            }
+    currSize = player1.get_currInventorySize();
 
-            if (itemSelect <= player1.get_currInventorySize()) {
-              if (player1.getInventoryItem(itemSelect - 1)->get_name() ==
-                  "Health Potion") {
-                if (player1.get_Health() + 25 > player1.get_maxHealth()) {
-                  player1.set_Health(player1.get_maxHealth());
-                } else {
-                  player1.set_Health(player1.get_Health() + 25);
-                }
-                std::cout << "Health increased by 25\n";
-                player1.removeFromInventory(itemSelect - 1);
-                std::cout << "Potion was discarded\n";
-              } else {
-                std::cout << "This item cannot be used now\n";
-              }
-            }
-            itemSelect = 0;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) &&
-                clock.getElapsedTime().asSeconds() > 0.5) {
-              inInventory = false;
-            }
-          }
+    if (currSize <= 0) {
+        std::cout << "Inventory is empty\n";
+        text.setString("Inventory: \nInventory is empty\n");
+    } else {
+        for (int i = 0; i < currSize; i++) {
+            ss << (i + 1) << ". " << player1.getInventoryItem(i)->get_name() << "\n";
         }
-        clock.restart();
-      }
+        text.setString(ss.str());
+    }
+
+    render();
+    window.display();
+
+    sf::Event event1;
+    bool playerHasChosen = false;
+    int itemSelect = 0;
+
+    while (inInventory && !playerHasChosen) {
+    while (window.pollEvent(event1)) {
+        if (event1.type == sf::Event::TextEntered) {
+            if (event1.text.unicode >= '1' && event1.text.unicode <= '4') {
+                itemSelect = event1.text.unicode - '0';
+                playerHasChosen = true;
+            }
+        }
+    }
+
+    // Check for key presses for item selection
+    for (int i = sf::Keyboard::Num1; i <= sf::Keyboard::Num4; ++i) {
+        if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(i))) {
+            itemSelect = i - sf::Keyboard::Num1 + 1;
+            playerHasChosen = true;
+            break;
+        }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && clock.getElapsedTime().asSeconds() > 0.5) {
+        inInventory = false;
+    }
+    sf::sleep(sf::milliseconds(100)); // Add a small delay to prevent excessive loop iterations.
+}
+
+    if (playerHasChosen && itemSelect <= currSize) {
+        if (player1.getInventoryItem(itemSelect - 1)->get_name() == "Health Potion") {
+            if (player1.get_Health() + 25 > player1.get_maxHealth()) {
+                player1.set_Health(player1.get_maxHealth());
+            } else {
+                player1.set_Health(player1.get_Health() + 25);
+            }
+            std::cout << "Health increased by 25\n";
+            player1.removeFromInventory(itemSelect - 1);
+            std::cout << "Potion was discarded\n";
+        } else {
+            std::cout << "This item cannot be used now\n";
+        }
+    }
     }
   }
 }
