@@ -70,7 +70,21 @@ void Player::addToInventory(Item* item) {
   }
   
 }
+void Player::removeFromInventory(int index){
+    if (index >= 0 && index < currInventorySize) {
+        inventory[index] = nullptr;
+        
+        for (int i = index; i < currInventorySize - 1; i++) {
+            inventory[i] = inventory[i + 1];
+        }
 
+        currInventorySize--;
+
+        inventory[currInventorySize] = nullptr;
+    } else {
+        std::cout << "Invalid index\n";
+    }
+}
 Item* Player::getInventoryItem(int index) {
   if (index >= 0 && index < currInventorySize) {
     return inventory[index];

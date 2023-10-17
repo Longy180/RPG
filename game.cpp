@@ -253,6 +253,30 @@ void Game::movement() {
         clock.restart();
           }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
             std::cout << "Inventory: \n";
+            int currSize = player1.get_currInventorySize();
+            if (currSize <= 0){
+            std::cout << "Inventory is empty";
+            }else{
+            for (int i = 0; i < currSize; i++){
+            std::cout << i+1 << ". " << player1.getInventoryItem(i)->get_name() <<"\n";
+            }
+            int itemSelect;
+            std::cout << "Select which item you would like to use";
+            std::cin >> itemSelect;
+            if(player1.getInventoryItem(itemSelect-1)->get_name() == "Health Potion"){
+              if(player1.get_Health()+25 > player1.get_maxHealth()){
+                player1.set_Health(player1.get_maxHealth());
+              }else{
+                player1.set_Health(player1.get_Health()+25);
+              }
+              std::cout << "Health increased by 25\n";
+              player1.removeFromInventory(itemSelect-1);
+              std::cout << "Potion was discarded\n";
+            }else{
+              std::cout << "This item cannot be used now\n";
+            }
+            }
+            clock.restart();
           }
         }
       }
@@ -393,11 +417,6 @@ void Game::handleEvents() {
     render();
 
     window.display();
-
-
-    // display player coordinates
-    // std::cout << player1.get_x() << " " << player1.get_y() << std::endl;
-
   }
 }
 

@@ -31,6 +31,7 @@ class Player : public Character {
   virtual void heal();
   virtual void takeDamage(int damage);
   void addToInventory(Item* item);
+  void removeFromInventory(int index);
   Item* getInventoryItem(int index);
   void draw(sf::RenderWindow* win);
   ~Player();
