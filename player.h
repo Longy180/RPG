@@ -24,6 +24,7 @@ class Player : public Character {
   bool isHit(int t_x, int t_y, int t_depth);
   int get_depth();
   int get_Gold();
+  int get_currInventorySize();
   void add_Gold(int gold);
   virtual void attack1(Enemy* opponent);
   virtual void attack2(Enemy* opponent);

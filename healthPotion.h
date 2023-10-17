@@ -7,6 +7,7 @@ class HealthPotion : public Item{
     int healthIncrease;
     public:
     HealthPotion();
+    HealthPotion(std::string name);
     int get_healthIncrease();
     void itemEffect(Player * player);
 };

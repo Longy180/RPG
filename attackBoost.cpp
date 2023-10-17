@@ -1,6 +1,9 @@
 #include "attackBoost.h"
 #include "player.h"
-AttackBoost::AttackBoost() : Item(10, 5){
+AttackBoost::AttackBoost() : Item("",10, 5){
+    damageIncrease = 3;
+}
+AttackBoost::AttackBoost(std::string name) : Item(name, 10, 5){
     damageIncrease = 3;
 }
 int AttackBoost::get_damageIncrease(){

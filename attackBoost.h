@@ -7,6 +7,7 @@ class AttackBoost : public Item{
     int damageIncrease;
     public:
     AttackBoost();
+    AttackBoost(std::string name);
     int get_damageIncrease();
     void itemEffect(Player * player);
 };
