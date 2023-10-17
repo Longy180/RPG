@@ -15,12 +15,10 @@ Player::Player(std::string spriteLocation, int positionX, int positionY,
   maxInventorySize = 4;
   inventory = new Item*[maxInventorySize];
   currInventorySize = 0;
-  
+  healingCounter = 0;
 }
 
-void Player::set_gold(int _gold){
-  currGold = _gold;
-}
+void Player::set_gold(int _gold) { currGold = _gold; }
 
 // draws player sprite to game window
 void Player::draw(sf::RenderWindow* win) { win->draw(entitySprite); }
@@ -56,39 +54,33 @@ bool Player::isHit(int t_x, int t_y, int t_depth) {
 
   return hit;
 }
-int Player::get_Gold(){
-return(currGold);
-}
-int Player::get_currInventorySize(){
-  return(currInventorySize);
-}
-void Player::add_Gold(int gold){
-currGold += gold;
-}
+int Player::get_Gold() { return (currGold); }
+int Player::get_currInventorySize() { return (currInventorySize); }
+void Player::add_Gold(int gold) { currGold += gold; }
 void Player::addToInventory(Item* item) {
-  if(currInventorySize < maxInventorySize){
+  if (currInventorySize < maxInventorySize) {
     inventory[currInventorySize] = item;
     currInventorySize++;
-  }else{
-  std::cout<<"Inventory is full";
+  } else {
+    std::cout << "Inventory is full";
   }
-  
 }
-void Player::removeFromInventory(int index){
-    if (index >= 0 && index < currInventorySize) {
-        inventory[index] = nullptr;
-        
-        for (int i = index; i < currInventorySize - 1; i++) {
-            inventory[i] = inventory[i + 1];
-        }
+void Player::removeFromInventory(int index) {
+  if (index >= 0 && index < currInventorySize) {
+    inventory[index] = nullptr;
 
-        currInventorySize--;
-
-        inventory[currInventorySize] = nullptr;
-    } else {
-        std::cout << "Invalid index\n";
+    for (int i = index; i < currInventorySize - 1; i++) {
+      inventory[i] = inventory[i + 1];
     }
+
+    currInventorySize--;
+
+    inventory[currInventorySize] = nullptr;
+  } else {
+    std::cout << "Invalid index\n";
+  }
 }
+
 Item* Player::getInventoryItem(int index) {
   if (index >= 0 && index < currInventorySize) {
     return inventory[index];
@@ -108,13 +100,27 @@ void Player::attack2(Enemy* opponent) {
     std::cout << "Your volley missed\n";
   }
 }
+
 void Player::heal() {
-  if (currHealth + 15 > maxHealth) {
-    currHealth = maxHealth;
+  if (currHealth + 20 > maxHealth) {
+    if (healingCounter <= 4) {
+      currHealth = maxHealth;
+      healingCounter++;
+    }
   } else {
-    currHealth += 15;
+    if (healingCounter <= 4) {
+      currHealth += 20;
+      healingCounter++;
+    }
   }
 }
+
+int Player::get_healingCounter() { return healingCounter; }
+
+void Player::set_healingCounter(int _healingCounter) {
+  healingCounter = _healingCounter;
+}
+
 void Player::takeDamage(int damage) { currHealth = currHealth - damage; }
 
 // Destructor

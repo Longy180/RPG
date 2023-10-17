@@ -10,7 +10,7 @@ class Mage : public Player {
   Mage();
   void attack1(Enemy* opponent);
   void attack2(Enemy* opponent);
-  void heal();
+  virtual void heal();
   void takeDamage(int damage);
   ~Mage();
 };

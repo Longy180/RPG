@@ -30,9 +30,9 @@ Game::Game()
           (std::string) "Sprites/halfling ranger/HalflingRangerIdleSide.gif",
           200, 200, 100, 100, 10, 0),
       enemy1("Sprites/orc savage/OrcSavageIdleSide.gif", 1200, 280, 50, 50, 5),
-      enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 50, 50, 5),
-      boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 100,
-            100, 8),
+      enemy2("Sprites/orc savage/OrcSavageIdleSide.gif", 1700, 280, 100, 100, 5),
+      boss1("Sprites/orc juggernaut/OrcJuggernautIdleSide.gif", 650, 700, 125,
+            125, 8),
       animation() {
   // Initialize member variables and load resources here
   if (!font.loadFromFile("Fonts/VideoGame_Font.ttf")) {
@@ -498,6 +498,7 @@ void Game::Save(std::string fileName) {
   outFile << player1.get_x() << std::endl;
   outFile << player1.get_y() << std::endl;
   outFile << player1.get_Gold() << std::endl;
+  outFile << player1.get_healingCounter() << std::endl;
   outFile << enemy1.isAlive() << std::endl;
   outFile << enemy2.isAlive() << std::endl;
   outFile << boss1.isAlive() << std::endl;
@@ -513,6 +514,7 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
   int new_x;
   int new_y;
   int new_gold;
+  int new_healingCounter;
   bool enemy1Alive;
   bool enemy2Alive;
   bool boss1Alive;
@@ -529,6 +531,9 @@ void Game::Load(std::string fileName, Player& player1, Enemy& enemy1,
   // Checking gold count
   inFile >> new_gold;
   player1.set_gold(new_gold);
+
+  inFile >> new_healingCounter;
+  player1.set_healingCounter(new_healingCounter);
 
   // Checking enemy if alive
   inFile >> enemy1Alive;

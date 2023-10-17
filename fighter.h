@@ -8,10 +8,10 @@ private:
 
 public:
 Fighter();
-void attack1(Enemy * opponent);
-void attack2(Enemy * opponent);
-void heal(); 
-void takeDamage(int damage);
+virtual void attack1(Enemy * opponent);
+virtual void attack2(Enemy * opponent);
+virtual void heal(); 
+virtual void takeDamage(int damage);
 ~Fighter();
 };
 #endif
