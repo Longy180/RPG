@@ -55,6 +55,9 @@ bool Player::isHit(int t_x, int t_y, int t_depth) {
 int Player::get_Gold(){
 return(currGold);
 }
+int Player::get_currInventorySize(){
+  return(currInventorySize);
+}
 void Player::add_Gold(int gold){
 currGold += gold;
 }

@@ -1,6 +1,9 @@
 #include "healthPotion.h"
 #include "player.h"
-HealthPotion::HealthPotion() : Item(10, 5){
+HealthPotion::HealthPotion() : Item("", 10, 5){
+    healthIncrease = 25;
+}
+HealthPotion::HealthPotion(std::string name) : Item(name, 10, 5){
     healthIncrease = 25;
 }
 int HealthPotion::get_healthIncrease(){
