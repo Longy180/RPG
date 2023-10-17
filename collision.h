@@ -12,7 +12,7 @@
 
 class Collision {
   private:
-    sf::RectangleShape rectangles[20];
+    sf::RectangleShape rectangles[35];
 
   public:
     Collision();
