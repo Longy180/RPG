@@ -21,7 +21,7 @@ class AnimationTest {
     Animation animation;
     animation.set_charSelection(1);
     animation.bodyMoveLeft(entityBody);
-    if (!animation.get_lastMove() == 1) {
+    if (animation.get_lastMove() != 1) {
       std::cout << "Error in test 1." << std::endl;
     }
   }
@@ -30,7 +30,7 @@ class AnimationTest {
     Animation animation;
     animation.set_charSelection(1);
     animation.bodyMoveRight(entityBody);
-    if (!animation.get_lastMove() == 2) {
+    if (animation.get_lastMove() !=  2) {
       std::cout << "Error in test 2." << std::endl;
     }
   }
@@ -38,7 +38,7 @@ class AnimationTest {
   void testGetLastMove() {
     Animation animation;
     animation.set_lastMove(1);
-    if (!animation.get_lastMove() == 1) {
+    if (animation.get_lastMove() !=  1) {
       std::cout << "Error in test 3." << std::endl;
     }
   }
@@ -46,7 +46,7 @@ class AnimationTest {
   void testSetLastMove() {
     Animation animation;
     animation.set_lastMove(2);
-    if (!animation.get_lastMove() == 2) {
+    if (animation.get_lastMove() !=  2) {
       std::cout << "Error in test 4." << std::endl;
     }
   }
@@ -54,7 +54,7 @@ class AnimationTest {
   void testGetCharSelection() {
     Animation animation;
     animation.set_charSelection(3);
-    if (!animation.get_charSelection() == 3) {
+    if (animation.get_charSelection() !=  3) {
       std::cout << "Error in test 5." << std::endl;
     }
   }
@@ -62,7 +62,7 @@ class AnimationTest {
   void testSetCharSelection() {
     Animation animation;
     animation.set_charSelection(2);
-    if (!animation.get_charSelection() == 2) {
+    if (animation.get_charSelection() !=  2) {
       std::cout << "Error in test 6." << std::endl;
     }
   }

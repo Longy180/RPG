@@ -13,7 +13,7 @@ attackTest.ItemTest();
 healthBoostTest healthTest;
 healthTest.ItemTest();
 healthPotionTest potionTest;
-attackTest.ItemTest();
+potionTest.ItemTest();
 CollisionTest CollisionTest;
 FighterTest fighterTest;
 MageTest mageTest;

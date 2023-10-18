@@ -13,5 +13,6 @@ class Item {
   int get_buyPrice();
   int get_sellPrice();
   std::string get_name();
+  virtual void itemEffect();
 };
 #endif
