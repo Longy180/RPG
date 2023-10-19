@@ -67,8 +67,8 @@ class FighterTest {
           << std::endl;
     }
     
-    fighter.attack2(&enemy);
-    if (enemy.get_Health() != 90 || enemy.get_Health() != 70) {
+    fighter.attack1(&enemy);
+    if (enemy.get_Health() != 80 || enemy.get_Health() != 70) {
       std::cout
           << "Error in test 11 FIGHTER: Getting correct enemy health after attack2."
           << std::endl;

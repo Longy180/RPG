@@ -65,8 +65,8 @@ class RangerTest {
           << std::endl;
     }
 
-    ranger.attack2(&enemy);
-    if (enemy.get_Health() != 90 || enemy.get_Health() != 70) {
+    ranger.attack1(&enemy);
+    if (enemy.get_Health() != 80 || enemy.get_Health() != 70) {
       std::cout
           << "Error in test 11 RANGER: Getting correct enemy health after attack2."
           << std::endl;
