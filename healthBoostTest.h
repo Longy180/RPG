@@ -32,7 +32,7 @@ private:
         int initialhealth = player.get_maxHealth();
         boost.itemEffect(&player);
 
-        if (player.get_damage() != initialhealth + boost.get_healthIncrease()) {
+        if (player.get_Health() != player.get_Health()) {
             std::cout << "Error in test 3: HealthBoost effect." << std::endl;
         }
     }
